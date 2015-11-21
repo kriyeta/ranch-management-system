@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane style="-fx-border-width: 2; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.MainController">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <VBox style="-fx-border-color: black; -fx-border-width: 1; -fx-background-color: #1976D2;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" rotate="-5.0" text="Ranch Managment System" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Label>
+               </children>
+            </VBox>
+         </top>
+         <left>
+            <AnchorPane minHeight="200.0" minWidth="200.0" style="-fx-background-color: #90CAF9;" BorderPane.alignment="CENTER">
+               <children>
+                  <Accordion fx:id="mainMenu" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <panes>
+                      <TitledPane animated="false" text="Animals Management">
+                        <content>
+                          <AnchorPane>
+                                 <children>
+                                    <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Button fx:id="addAnimal" mnemonicParsing="false" onAction="#addAnimal" text="Add Animal" />
+                                          <Button fx:id="updateAnimal" mnemonicParsing="false" onAction="#updateAnimal" text="Update Animal" />
+                                          <Button fx:id="viewAnimals" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewAnimals" text="View Animals" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Animals Mating">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Ranch Expenses">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children></AnchorPane>
+         </left>
+         <bottom>
+            <AnchorPane BorderPane.alignment="CENTER" />
+         </bottom>
+         <center>
+            <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="TOP_CENTER">
+               <children>
+                  <StackPane fx:id="detailedPane" alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

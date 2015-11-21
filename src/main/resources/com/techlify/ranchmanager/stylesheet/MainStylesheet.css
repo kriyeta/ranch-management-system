@@ -1,0 +1,37 @@
+AnchorPane {
+	-fx-border-color: black;
+	-fx-border-width: 1;
+}
+
+Accordion Button {
+	-fx-font-size: 15.0px;
+	-fx-font-weight: bold;
+	-fx-base: #00a7d4;
+	-fx-min-width: 250.0px;
+	-fx-background: #e5f3f6;
+	-fx-focus-color: #0093FF;
+	-fx-control-inner-background: #FFFFFF;
+	-fx-text-base-color: #FFFFFF;
+	-fx-background-color: #00a7d4;
+	-fx-inner-border: linear-gradient(to bottom, derive(-fx-color, 73.6%)
+		0.0%, derive(-fx-color, 29.200000000000003%) 100.0%);
+	-fx-body-color: linear-gradient(to bottom, derive(-fx-color, 34.0%) 0.0%,
+		derive(-fx-color, -18.0%) 100.0%);
+	-fx-background-insets: -1.4, 0.0, 1.0, 2.0;
+	-fx-background-radius: 0.0px;
+	-fx-text-fill: -fx-text-base-color;
+	-fx-alignment: CENTER_LEFT;
+	-fx-content-display: LEFT;
+}
+
+Accordion Button:focused {
+	-fx-color: #00a7d4;
+	-fx-background-color: #ED9C28, #00a7d4;
+	-fx-background-insets: -1.4, 0.0, 1.0, 2.0;
+	-fx-background-radius: 0.0;
+}
+
+Accordion Button:hover {
+	-fx-focus-color: #FF0000;
+	-fx-background-color: #ED9C28, #0187ab;
+}

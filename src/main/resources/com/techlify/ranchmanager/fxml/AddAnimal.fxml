@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane fx:id="createUserForm" hgap="10.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.AddAnimalController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" percentWidth="25.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="2.0" percentWidth="3.0" prefWidth="6.0" />
+		<ColumnConstraints hgrow="SOMETIMES" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label text="Numbers *" GridPane.rowIndex="1" />
+		<Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Label text="Gender" GridPane.rowIndex="4" />
+		<Label layoutX="157.0" layoutY="190.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+		<Label layoutX="10.0" layoutY="21.0" text="Type *" GridPane.rowIndex="2" />
+		<Label layoutX="157.0" layoutY="21.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<Label layoutX="10.0" layoutY="21.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+		<Label layoutX="10.0" layoutY="21.0" text="Photos" GridPane.rowIndex="5" />
+		<VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
+			<children>
+				<TextField fx:id="numbers" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+			</children>
+		</VBox>
+		<VBox GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <children>
+            <HBox spacing="3.0">
+               <children>
+                  <ChoiceBox fx:id="type" />
+                  <Button fx:id="addNewType" mnemonicParsing="false" onAction="#addNewType" text="Add New Type" />
+               </children>
+            </HBox>
+         </children>
+		</VBox>
+		<VBox GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <children>
+            <DatePicker fx:id="dateOfBirth" />
+         </children>
+		</VBox>
+		<VBox GridPane.columnIndex="2" GridPane.rowIndex="4">
+         <children>
+            <ChoiceBox fx:id="gender" />
+         </children>
+		</VBox>
+		<VBox fx:id="photosGroup" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+         <children>
+            <HBox spacing="3.0">
+               <children>
+                  <TextField fx:id="imagePath" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="browseButton" mnemonicParsing="false" onAction="#browsePhoto" text="Browse" />
+               </children>
+            </HBox>
+            <Button fx:id="addMorePhotos" mnemonicParsing="false" onAction="#addMorePhotos" text="Add More Photos" textAlignment="CENTER" />
+         </children>
+		</VBox>
+		<Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitForm" text="SUBMIT" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+		<Button fx:id="resetButton" mnemonicParsing="false" onAction="#clearForm" text="RESET" GridPane.rowIndex="6" />
+		<Label layoutX="20.0" layoutY="87.0" text="Date of Birth" GridPane.rowIndex="3" />
+		<Label layoutX="169.0" layoutY="247.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+		<Label fx:id="errorLabel" GridPane.columnSpan="2147483647" />
+	</children>
+</GridPane>

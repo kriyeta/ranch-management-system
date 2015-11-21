@@ -1,0 +1,52 @@
+{
+	-fx-max-width-default: 700.0px;
+	-fx-min-width-fields-default: 220.0px;
+}
+
+TextField {
+    -fx-min-width: -fx-min-width-fields-default;
+}
+
+ChoiceBox {
+    -fx-min-width: -fx-min-width-fields-default;
+}
+
+DatePicker {
+    -fx-min-width: -fx-min-width-fields-default;
+}
+
+GridPane{
+	-fx-alignment:top-center;
+	-fx-hgap:5.0px;
+	-fx-max-width:-fx-max-width-default;
+	-fx-min-width:-fx-max-width-default;
+	-fx-vgap:10.0px;
+	-fx-padding: 30 10 20 10;
+	-fx-blend-mode:darken;
+}
+
+Label{
+	-fx-alignment:top-left;
+}
+
+#resetButton{
+	-fx-alignment:center;
+	-fx-pref-width:100.0px;
+	-fx-max-width: -fx-max-width-default;
+}
+
+#submitButton{
+	-fx-alignment:center;
+	-fx-pref-width:200.0px;
+	-fx-max-width: -fx-max-width-default;
+}
+
+#errorLabel{
+	-fx-text-fill: red;
+	-fx-font-size: 16;
+}
+
+#errorMessages{
+	-fx-text-fill: red;
+	-fx-font-size: 14;
+}
