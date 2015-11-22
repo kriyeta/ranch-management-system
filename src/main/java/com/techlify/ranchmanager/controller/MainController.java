@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 import com.techlify.ranchmanager.common.AllPaths;
@@ -20,6 +21,9 @@ public class MainController {
 	
 	@FXML
     private StackPane detailedPane;
+
+	@FXML
+	private Label title;
 	
 	@FXML
 	private Button addAnimal;
@@ -37,6 +41,7 @@ public class MainController {
 
     @FXML
     public void addAnimal(ActionEvent event) {
+    	title.setText("Add Animal");
     	FXMLUtility.loadFxmlOnStackPane(AllPaths.ADD_ANIMAL_PAGE, detailedPane );
     }
     

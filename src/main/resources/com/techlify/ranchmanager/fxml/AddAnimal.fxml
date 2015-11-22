@@ -36,12 +36,12 @@
 				<TextField fx:id="numbers" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 			</children>
 		</VBox>
-		<VBox GridPane.columnIndex="2" GridPane.rowIndex="2">
+		<VBox fx:id="typeVBox" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <children>
-            <HBox spacing="3.0">
+            <HBox fx:id="typeHBox" spacing="3.0">
                <children>
-                  <ChoiceBox fx:id="type" />
-                  <Button fx:id="addNewType" mnemonicParsing="false" onAction="#addNewType" text="Add New Type" />
+                  <ComboBox fx:id="type" onMouseClicked="#fillAnimalTypes" prefWidth="150.0" promptText="Please Select Animal Type" />
+                  <Button fx:id="addNewType" mnemonicParsing="false" onAction="#addNewType" text="Add New Animal Type" />
                </children>
             </HBox>
          </children>

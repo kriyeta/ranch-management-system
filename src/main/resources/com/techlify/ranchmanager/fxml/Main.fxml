@@ -70,6 +70,14 @@
          <center>
             <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="TOP_CENTER">
                <children>
+                  <Label fx:id="title">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Label>
                   <StackPane fx:id="detailedPane" alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
                </children>
             </VBox>

@@ -10,7 +10,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="ANIMALTYPE")
+@Table(name="ANIMAL_TYPE")
 public class AnimalType {
  
     @Id

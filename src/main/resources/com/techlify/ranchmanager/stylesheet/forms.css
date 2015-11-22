@@ -7,7 +7,11 @@ TextField {
     -fx-min-width: -fx-min-width-fields-default;
 }
 
-ChoiceBox {
+.combo-box {
+    -fx-min-width: -fx-min-width-fields-default;
+}
+
+.combo-box-popup > .list-view {
     -fx-min-width: -fx-min-width-fields-default;
 }
 
@@ -23,6 +27,11 @@ GridPane{
 	-fx-vgap:10.0px;
 	-fx-padding: 30 10 20 10;
 	-fx-blend-mode:darken;
+}
+
+#addNewAnimalType{
+	-fx-max-width:400.0px;
+	-fx-min-width:400.0px;
 }
 
 Label{
