@@ -53,18 +53,15 @@
 		</VBox>
 		<VBox GridPane.columnIndex="2" GridPane.rowIndex="4">
          <children>
-            <ChoiceBox fx:id="gender" />
+            <ComboBox fx:id="gender" prefWidth="150.0" promptText="Please Select Gender" />
          </children>
 		</VBox>
 		<VBox fx:id="photosGroup" spacing="3.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <children>
-            <HBox spacing="3.0">
-               <children>
-                  <TextField fx:id="imagePath" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="browseButton" mnemonicParsing="false" onAction="#browsePhoto" text="Browse" />
-               </children>
-            </HBox>
-            <Button fx:id="addMorePhotos" mnemonicParsing="false" onAction="#addMorePhotos" text="Add More Photos" textAlignment="CENTER" />
+            <Button fx:id="addMorePhotos" mnemonicParsing="false" onAction="#addMorePhotos" text="Add More Photos" textAlignment="CENTER">
+               <graphic>
+                  <Label fx:id="maxLimitReachedLabel" />
+               </graphic></Button>
          </children>
 		</VBox>
 		<Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitForm" text="SUBMIT" GridPane.columnIndex="2" GridPane.rowIndex="6" />

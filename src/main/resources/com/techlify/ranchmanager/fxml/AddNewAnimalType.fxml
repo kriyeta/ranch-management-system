@@ -36,5 +36,6 @@
 		<Label text="Description" GridPane.rowIndex="2" />
 		<Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 		<Label fx:id="errorLabel" GridPane.columnSpan="2147483647" />
+      <Button fx:id="cancelAddingNewType" mnemonicParsing="false" onAction="#cancelAddingNewType" text="Cancel" GridPane.rowIndex="3" />
 	</children>
 </GridPane>

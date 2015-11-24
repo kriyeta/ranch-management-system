@@ -58,6 +58,13 @@ public class AddNewAnimalTypeController {
          }
     }
 
+    @FXML
+    void cancelAddingNewType(ActionEvent event) {
+    	VBox typeVBox	=	(VBox) typeHBox.getParent();
+    	typeVBox.getChildren().remove(addNewAnimalType);
+       	 typeHBox.setVisible(true);
+    }
+
     static void setTypeHBox(HBox hBox){
     	typeHBox	=	hBox;
     }

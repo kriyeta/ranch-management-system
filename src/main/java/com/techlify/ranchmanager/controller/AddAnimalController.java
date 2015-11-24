@@ -1,13 +1,15 @@
 package com.techlify.ranchmanager.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -18,10 +20,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.hibernate.Session;
+import org.json.simple.JSONObject;
 
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.convertor.AnimalTypeConvertor;
+import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
+import com.techlify.ranchmanager.util.DateUtils;
 import com.techlify.ranchmanager.util.FXMLUtility;
 import com.techlify.ranchmanager.util.HibernateUtil;
 import com.techlify.ranchmanager.util.PrintLog;
@@ -45,10 +50,7 @@ public class AddAnimalController {
 	private Button submitButton;
 
 	@FXML
-	private ChoiceBox<?> gender;
-
-	@FXML
-	private TextField imagePath;
+	private ComboBox<String> gender;
 
 	@FXML
 	private TextField numbers;
@@ -60,7 +62,7 @@ public class AddAnimalController {
 	private ComboBox<AnimalType> type;
 
 	@FXML
-	private Button browseButton;
+	private Label maxLimitReachedLabel;
 
 	@FXML
 	private Button addMorePhotos;
@@ -81,7 +83,17 @@ public class AddAnimalController {
 
 	@FXML
 	private void initialize() {
+		// adding convertor for type combobox
 		type.setConverter(new AnimalTypeConvertor());
+
+		// adding one browse button initially
+		addMorePhotos(null);
+
+		// setting genders
+		ArrayList<String> allGenders = new ArrayList<String>();
+		allGenders.add("Male");
+		allGenders.add("Female");
+		gender.setItems(FXCollections.observableArrayList(allGenders));
 	}
 
 	@FXML
@@ -96,13 +108,15 @@ public class AddAnimalController {
 	}
 
 	@FXML
-	void browsePhoto(ActionEvent event) {
-
-	}
-
-	@FXML
 	void addMorePhotos(ActionEvent event) {
-
+		HBox uploadImageHBox = (HBox) FXMLUtility
+				.loadFxmlOnComponent(AllPaths.UPLOAD_IMAGE_PAGE);
+		if (photosGroup.getChildren().size() < 7) {
+			photosGroup.getChildren().add(photosGroup.getChildren().size() - 1,
+					uploadImageHBox);
+		} else {
+			addMorePhotos.setText("Reached maximum limit of images");
+		}
 	}
 
 	@FXML
@@ -126,12 +140,80 @@ public class AddAnimalController {
 
 	@FXML
 	void submitForm(ActionEvent event) {
+		boolean isValid = checkForValidations();
+		try {
+			if (isValid) {
+				Animal animal = new Animal();
+				animal.setNumbers(Long.parseLong(numbers.getText()));
+				animal.setTypeId(type.getSelectionModel().getSelectedItem());
+				animal.setGender(gender.getSelectionModel().getSelectedItem());
+				Date value = DateUtils.asDate(dateOfBirth.getValue());
+				animal.setDateOfBirth(value);
+
+				if (resultStatus.equalsIgnoreCase("success")) {
+					JSONObject createdRoleData = ((JSONObject) jsonObjectResult
+							.get("data"));
+					errorLabel.setWrapText(true);
+					errorLabel
+							.setStyle("-fx-text-fill: green; -fx-font-size: 16;");
+					errorLabel
+							.setText("Role is updated successfully with id \""
+									+ createdRoleData.get("roleId")
+									+ "\" and name \""
+									+ createdRoleData.get("name") + "\".");
+					clearForm(null);
+				} else {
+					errorLabel.setWrapText(true);
+					errorLabel
+							.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
+					errorLabel
+							.setText("Ooops something went wrong, please try again.");
+				}
+
+			}
+		} catch (Exception e) {
+			errorLabel.setWrapText(true);
+			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
+			errorLabel.setText("Ooops something went wrong, please try again.");
+		}
 
 	}
 
 	@FXML
-	void clearForm(ActionEvent event) {
+	public void clearForm(ActionEvent event) {
+		PrintLog.printLog("Clearing form");
+		for (Node node : createUserForm.getChildren()) {
+			if (node instanceof VBox) {
+				PrintLog.printLog(node);
+				for (Node node1 : ((VBox) node).getChildren()) {
+					PrintLog.printLog(node1);
+					if (node1 instanceof TextField) {
+						PrintLog.printLog(node1);
+						((TextField) node1).clear();
+					}
+				}
+			}
+		}
+	}
 
+	/*
+	 * Other methods
+	 */
+	private Boolean checkForValidations() {
+		boolean isValid = true;
+
+		// if(!password.getText().equals(reenterPassword.getText())){
+		// isValid = false;
+		// VBox parent = (VBox)password.getParent();
+		// Label label = new Label("Rentered password doesn't match.");
+		// label.setId("errorMessages");
+		// parent.getChildren().add(label);
+		// }
+
+		if (!isValid) {
+			errorLabel.setText("Error in form.");
+		}
+		return isValid;
 	}
 
 }

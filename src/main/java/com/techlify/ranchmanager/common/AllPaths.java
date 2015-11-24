@@ -12,6 +12,7 @@ public class AllPaths {
 	public static final String MAIN_PAGE	=	BASE_PATH+"Main.fxml"; 
 	public static final String ADD_ANIMAL_PAGE	=	BASE_PATH+"AddAnimal.fxml"; 
 	public static final String ADD_NEW_TYPE_ANIMAL_PAGE	=	BASE_PATH+"AddNewAnimalType.fxml"; 
+	public static final String UPLOAD_IMAGE_PAGE	=	BASE_PATH+"UploadImage.fxml"; 
 	
 	/*
 	 * all stylesheet paths
