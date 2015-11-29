@@ -1,7 +1,5 @@
 package com.techlify.ranchmanager.dao;
 
-import java.sql.Blob;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +20,7 @@ public class Photo {
     private Long id; 
     
     @Column(name="PHOTO")
-    private Blob photo;
+    private byte[] photo;
     
     @Column(name="NAME")
     private String name;
@@ -38,11 +36,11 @@ public class Photo {
 		this.id = id;
 	}
 
-	public Blob getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Blob photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

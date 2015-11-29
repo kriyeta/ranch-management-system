@@ -21,6 +21,11 @@ public class UploadImageController {
 
 	@FXML
 	private Button browseButton;
+	
+    @FXML
+	private void initialize() {
+    	imagePath.setDisable(false);
+	}
 
 	@FXML
 	void browsePhoto(ActionEvent event) {

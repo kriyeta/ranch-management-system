@@ -1,5 +1,8 @@
 package com.techlify.ranchmanager.util;
 
+import java.io.Serializable;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -30,5 +33,18 @@ public class HibernateUtil {
         // Close caches and connection pools
         getSessionFactory().close();
     }
+    
+    /**
+	 * @param object
+	 */
+	public static boolean addObjectToDatabase(Object object) {
+		Session session = HibernateUtil.getSessionFactory().openSession(); 
+		 session.beginTransaction();
+		 Serializable save = session.save(object);
+		 session.getTransaction().commit();
+		 if(save!=null){
+			 return true;
+		 } return false;
+	}
   
 }

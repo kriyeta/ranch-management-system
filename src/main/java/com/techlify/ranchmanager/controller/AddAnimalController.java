@@ -1,11 +1,14 @@
 package com.techlify.ranchmanager.controller;
 
-import java.time.LocalDate;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -20,12 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.hibernate.Session;
-import org.json.simple.JSONObject;
 
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.convertor.AnimalTypeConvertor;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
+import com.techlify.ranchmanager.dao.Photo;
 import com.techlify.ranchmanager.util.DateUtils;
 import com.techlify.ranchmanager.util.FXMLUtility;
 import com.techlify.ranchmanager.util.HibernateUtil;
@@ -141,6 +144,7 @@ public class AddAnimalController {
 	@FXML
 	void submitForm(ActionEvent event) {
 		boolean isValid = checkForValidations();
+
 		try {
 			if (isValid) {
 				Animal animal = new Animal();
@@ -150,17 +154,43 @@ public class AddAnimalController {
 				Date value = DateUtils.asDate(dateOfBirth.getValue());
 				animal.setDateOfBirth(value);
 
-				if (resultStatus.equalsIgnoreCase("success")) {
-					JSONObject createdRoleData = ((JSONObject) jsonObjectResult
-							.get("data"));
-					errorLabel.setWrapText(true);
-					errorLabel
-							.setStyle("-fx-text-fill: green; -fx-font-size: 16;");
-					errorLabel
-							.setText("Role is updated successfully with id \""
-									+ createdRoleData.get("roleId")
-									+ "\" and name \""
-									+ createdRoleData.get("name") + "\".");
+				ObservableList<Node> children = photosGroup.getChildren();
+				LinkedList<Photo> allPhotos = new LinkedList<Photo>();
+				for (Node node1 : children) {
+					if (node1 instanceof HBox) {
+						ObservableList<Node> photoChildren = ((HBox) node1)
+								.getChildren();
+						for (Node node : photoChildren) {
+							if (node instanceof TextField) {
+								String filePath = ((TextField) node).getText();
+								PrintLog.printLog(((TextField) node).getText());
+								if (filePath != null && !filePath.isEmpty()) {
+									Photo photo = new Photo();
+									File file = new File(filePath);
+									byte[] bFile = new byte[(int) file.length()];
+									try {
+										FileInputStream fileInputStream = new FileInputStream(
+												file);
+										fileInputStream.read(bFile);
+										fileInputStream.close();
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+									photo.setPhoto(bFile);
+									allPhotos.add(photo);
+								}
+
+							}
+						}
+					}
+				}
+
+				animal.setPhotos(allPhotos);
+
+				boolean addObjectToDatabase = HibernateUtil
+						.addObjectToDatabase(animal);
+				if (addObjectToDatabase == true) {
+					errorLabel.setText("Animal is added successfully");
 					clearForm(null);
 				} else {
 					errorLabel.setWrapText(true);
