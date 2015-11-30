@@ -1,7 +1,7 @@
 AnchorPane {
 	-fx-border-color: black;
 	-fx-border-width: 2;
-	-fx-max-width:700;	
+	-fx-max-width:700.0px;
 }
 
 #hederTitle{

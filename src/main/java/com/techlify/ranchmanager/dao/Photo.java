@@ -3,6 +3,7 @@ package com.techlify.ranchmanager.dao;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,10 +17,10 @@ public class Photo {
  
     @Id
     @Column(name="PHOTO_ID")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; 
     
-    @Column(name="PHOTO")
+    @Column(name="PHOTO",columnDefinition = "LONGBLOB")
     private byte[] photo;
     
     @Column(name="NAME")

@@ -42,7 +42,6 @@
                                     <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <Button fx:id="addAnimal" mnemonicParsing="false" onAction="#addAnimal" text="Add Animal" />
-                                          <Button fx:id="updateAnimal" mnemonicParsing="false" onAction="#updateAnimal" text="Update Animal" />
                                           <Button fx:id="viewAnimals" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewAnimals" text="View Animals" />
                                        </children>
                                     </VBox>

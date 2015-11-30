@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,7 +26,7 @@ public class Animal {
 
 	@Id
 	@Column(name = "ANIMAL_ID")
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "NUMBERS")
@@ -40,14 +41,6 @@ public class Animal {
 
 	@Column(name = "GENDER")
 	private String gender;
-
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "FATHER_ID")
-	private Animal father;
-
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "MOTHER_ID")
-	private Animal mother;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "ANIMAL_PHOTO", joinColumns = { @JoinColumn(name = "ANIMAL_ID", referencedColumnName = "ANIMAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID", referencedColumnName = "PHOTO_ID") })
@@ -93,22 +86,6 @@ public class Animal {
 		this.gender = gender;
 	}
 
-	public Animal getFather() {
-		return father;
-	}
-
-	public void setFather(Animal father) {
-		this.father = father;
-	}
-
-	public Animal getMother() {
-		return mother;
-	}
-
-	public void setMother(Animal mother) {
-		this.mother = mother;
-	}
-
 	public List<Photo> getPhotos() {
 		return photos;
 	}
@@ -117,11 +94,13 @@ public class Animal {
 		this.photos = photos;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return this.typeId+" "+this.id;
+		return this.typeId + " " + this.id;
 	}
 }

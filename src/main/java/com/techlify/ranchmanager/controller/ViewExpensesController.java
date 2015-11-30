@@ -15,8 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +32,7 @@ import javafx.util.Callback;
 import org.hibernate.Session;
 
 import com.techlify.ranchmanager.common.AllPaths;
+import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.main.PrimarySatge;
 import com.techlify.ranchmanager.util.FXMLUtility;
@@ -71,10 +73,10 @@ public class ViewExpensesController implements Initializable {
 	@FXML
 	private TableColumn dateAdded;
 
-	private Stage viewDetailStage;
+	private Stage editDialogBoxStage;
 
 	private ObservableList data;
-	
+
 	private ObservableList<Expense> getInitialTableData() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -191,110 +193,42 @@ public class ViewExpensesController implements Initializable {
 				public void handle(ActionEvent t) {
 					// showing detailed view on view button clicked
 					PrintLog.printLog("Edit button clicked ");
+					Expense expense = (Expense) ButtonCell.this.getTableView()
+							.getItems().get(ButtonCell.this.getIndex());
+					EditExpenseController.currentExpense = expense;
+					PrintLog.printLog(expense);
+					showEditDialogBox(expense);
+
 				}
 
-				private void showDetailedView(Expense animal) {
+				private void showEditDialogBox(Expense expense) {
 					// building pop up
-					if (viewDetailStage == null) {
-						viewDetailStage = getPopupScene();
+					if (editDialogBoxStage == null) {
+						editDialogBoxStage = getEditPopupScene();
 					}
-					AnchorPane anchorPane = new AnchorPane();
-					anchorPane
-							.getStylesheets()
-							.add(this
-									.getClass()
-									.getResource(
-											AllPaths.ANIMAL_DETAILED_VIEW_STYLESHEET)
-									.toExternalForm());
+
+					Node loadFxmlOnComponent = FXMLUtility
+							.loadFxmlOnComponent(AllPaths.EDIT_EXPENSES_PAGE);
 
 					// details main container
 					VBox vBox = new VBox();
 					vBox.setSpacing(10);
 					vBox.setId("veiwDetailsVBox");
-
-					FXMLUtility.setAnchorToZero(anchorPane, vBox);
-					anchorPane.getChildren().add(vBox);
-					Label hederTitle = new Label(
-							"DETAILED VIEW FOR ANIMAL WITH ID "
-									+ animal.getId());
-					hederTitle.setId("hederTitle");
-					vBox.getChildren().add(hederTitle);
-
-//					// parse animal object
-//					Long currentAnimalId = animal.getId();
-//					Long currentAnimalNumbers = animal.getNumbers();
-//					Date currentAnimalDateOfBirth = animal.getDateOfBirth();
-//					String currentAnimalGender = animal.getGender();
-//					AnimalType currentAnimalTypeId = animal.getTypeId();
-//					List<Photo> currentAnimalPhotos = animal.getPhotos();
-//
-//					// build animal details gui
-//
-//					// showing attributes
-//					GridPane gridPane = new GridPane();
-//					gridPane.setId("viewAnimalDetailsGridPane");
-//					gridPane.setHgap(15);
-//					gridPane.setVgap(2);
-//					gridPane.add(new Text("ID"), 0, 0);
-//					gridPane.add(new Text(":"), 1, 0);
-//					gridPane.add(new Text(String.valueOf(currentAnimalId)), 2,
-//							0);
-//					gridPane.add(new Text("NUMBERS"), 0, 1);
-//					gridPane.add(new Text(":"), 1, 1);
-//					gridPane.add(
-//							new Text(String.valueOf(currentAnimalNumbers)), 2,
-//							1);
-//					gridPane.add(new Text("DATE OF BIRTH"), 0, 2);
-//					gridPane.add(new Text(":"), 1, 2);
-//					gridPane.add(
-//							new Text(DateUtils.asLocalDate(
-//									currentAnimalDateOfBirth).toString()), 2, 2);
-//					gridPane.add(new Text("GENDER"), 0, 3);
-//					gridPane.add(new Text(":"), 1, 3);
-//					gridPane.add(new Text(currentAnimalGender), 2, 3);
-//					gridPane.add(new Text("TYPE"), 0, 4);
-//					gridPane.add(new Text(":"), 1, 4);
-//					gridPane.add(new Text(currentAnimalTypeId.getName()), 2, 4);
-//					vBox.getChildren().add(gridPane);
-//
-//					// showing images
-//
-//					HBox photosHBox = new HBox();
-//					photosHBox.setMaxWidth(600);
-//					for (Photo photo : currentAnimalPhotos) {
-//						VBox photoVBox = new VBox();
-//						photoVBox.getChildren().add(
-//								new Text("ID: " + photo.getId()));
-//						byte[] animalImage = photo.getPhoto();
-//						StackPane imageViewPane = new StackPane();
-//						imageViewPane.setId("animalImagePane");
-//						ImageView imageView = new ImageView();
-//						imageView.setImage(new Image(new ByteArrayInputStream(
-//								animalImage)));
-//						imageView.setFitWidth(150);
-//						imageView.setFitHeight(200);
-//						imageView.setPreserveRatio(false);
-//						imageViewPane.getChildren().add(imageView);
-//						photoVBox.getChildren().add(imageViewPane);
-//						photosHBox.getChildren().add(photoVBox);
-//					}
-//					ScrollPane scrollPane = new ScrollPane(photosHBox);
-//					scrollPane.setId("photosScrollPane");
-//					scrollPane.setFitToHeight(true);
-//					scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-//					scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
-//					vBox.getChildren().add(scrollPane);
-//					Scene dialogScene = new Scene(anchorPane,
-//							USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
-//					viewDetailStage.setScene(dialogScene);
-//					viewDetailStage.show();
-
+					vBox.getStylesheets().add(
+							this.getClass()
+									.getResource(AllPaths.FORM_STYLESHEET)
+									.toExternalForm());
+					vBox.getChildren().add(loadFxmlOnComponent);
+					Scene dialogScene = new Scene(vBox, USE_COMPUTED_SIZE,
+							USE_COMPUTED_SIZE);
+					editDialogBoxStage.setScene(dialogScene);
+					editDialogBoxStage.show();
 				}
 
 				/**
 				 * @return
 				 */
-				private Stage getPopupScene() {
+				private Stage getEditPopupScene() {
 					Stage stage = new Stage();
 					stage.initModality(Modality.NONE);
 					stage.initOwner(PrimarySatge.getPrimaryStage());

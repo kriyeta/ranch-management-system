@@ -75,6 +75,6 @@ public class MainController {
     @FXML
     void viewExpenses(ActionEvent event) {
     	title.setText("All Expenses");
-    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EPENSES_PAGE, detailedPane );
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EXPENSES_PAGE, detailedPane );
     }
 }

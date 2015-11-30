@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 public class Expense {
 	@Id
 	@Column(name = "EXPENSE_ID")
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(name = "DATE_ADDED")
@@ -70,5 +71,13 @@ public class Expense {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.id+this.type;
 	}
 }

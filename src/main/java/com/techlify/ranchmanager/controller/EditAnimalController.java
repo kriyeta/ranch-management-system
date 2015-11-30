@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
 import org.hibernate.Session;
 
 import com.techlify.ranchmanager.common.AllPaths;
-import com.techlify.ranchmanager.convertor.AnimalTypeConvertor;
+import com.techlify.ranchmanager.common.Messages;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
 import com.techlify.ranchmanager.dao.Photo;
@@ -38,7 +38,8 @@ import com.techlify.ranchmanager.util.PrintLog;
  * @author kamal
  *
  */
-public class AddAnimalController {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class EditAnimalController {
 
 	@FXML
 	private VBox typeVBox;
@@ -54,6 +55,9 @@ public class AddAnimalController {
 
 	@FXML
 	private ComboBox<String> gender;
+
+	@FXML
+	private TextField id;
 
 	@FXML
 	private TextField numbers;
@@ -83,20 +87,16 @@ public class AddAnimalController {
 	private GridPane createUserForm;
 
 	static boolean isFilled = false;
+	static Animal currentAnimal = null;
 
 	@FXML
 	private void initialize() {
-		// adding convertor for type combobox
-		type.setConverter(new AnimalTypeConvertor());
-
-		// adding one browse button initially
-		addMorePhotos(null);
-
-		// setting genders
-		ArrayList<String> allGenders = new ArrayList<String>();
-		allGenders.add("Male");
-		allGenders.add("Female");
-		gender.setItems(FXCollections.observableArrayList(allGenders));
+		id.setText(currentAnimal.getId().toString());
+		gender.getSelectionModel().select(currentAnimal.getGender());
+		dateOfBirth.setValue(DateUtils.asLocalDate(currentAnimal
+				.getDateOfBirth()));
+		numbers.setText(currentAnimal.getNumbers().toString());
+		type.getSelectionModel().select(currentAnimal.getTypeId());
 	}
 
 	@FXML
@@ -148,6 +148,7 @@ public class AddAnimalController {
 		try {
 			if (isValid) {
 				Animal animal = new Animal();
+				animal.setId(Long.parseLong(id.getText()));
 				animal.setNumbers(Long.parseLong(numbers.getText()));
 				animal.setTypeId(type.getSelectionModel().getSelectedItem());
 				animal.setGender(gender.getSelectionModel().getSelectedItem());
@@ -188,7 +189,7 @@ public class AddAnimalController {
 				animal.setPhotos(allPhotos);
 
 				boolean addObjectToDatabase = HibernateUtil
-						.addObjectToDatabase(animal);
+						.updateObjectToDatabase(animal);
 				if (addObjectToDatabase == true) {
 					errorLabel.setText("Animal is added successfully");
 					clearForm(null);
@@ -205,7 +206,7 @@ public class AddAnimalController {
 			e.printStackTrace();
 			errorLabel.setWrapText(true);
 			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
-			errorLabel.setText("Ooops something went wrong, please try again.");
+			errorLabel.setText(Messages.FORM_SUBMIT_FAILURE_MESSAGE);
 		}
 
 	}
@@ -242,7 +243,7 @@ public class AddAnimalController {
 		// }
 
 		if (!isValid) {
-			errorLabel.setText("Error in form.");
+			errorLabel.setText(Messages.VALIDATION_FAILURE_MESSAGE);
 		}
 		return isValid;
 	}

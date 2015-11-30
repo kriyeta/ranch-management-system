@@ -1,12 +1,15 @@
 package com.techlify.ranchmanager.controller;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -20,6 +23,7 @@ import javafx.scene.layout.VBox;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
+import com.techlify.ranchmanager.common.Messages;
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.util.DateUtils;
 import com.techlify.ranchmanager.util.HibernateUtil;
@@ -29,7 +33,8 @@ import com.techlify.ranchmanager.util.PrintLog;
  * @author kamal
  *
  */
-public class AddExpenseController {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class EditExpenseController implements Initializable {
 
 	@FXML
 	private TextField amount;
@@ -40,6 +45,9 @@ public class AddExpenseController {
 	@FXML
 	private HBox typeHBox;
 
+	@FXML
+	private TextField id;
+	
 	@FXML
 	private TextField details;
 
@@ -65,12 +73,21 @@ public class AddExpenseController {
 	private VBox typeVBox;
 
 	static boolean isFilled = false;
-
+	static Expense currentExpense	=	null;
 	@FXML
 	private void initialize() {
 		isFilled	=	false;
 	}
 
+	public void initialize(URL location, ResourceBundle resources) {
+		id.setText(currentExpense.getId().toString());
+		id.setDisable(true);
+		amount.setText(currentExpense.getAmount().toString());
+		details.setText(currentExpense.getDetails());
+		dateAdded.setValue(DateUtils.asLocalDate(currentExpense.getDate()));
+		type.getSelectionModel().select(currentExpense.getType());
+		
+	}
 	@FXML
 	void fillExpenseTypes(MouseEvent event) {
 		PrintLog.printLog("mouse clicked");
@@ -102,6 +119,7 @@ public class AddExpenseController {
 			if (isValid) {
 				
 				Expense expense	=	new Expense();
+				expense.setId(Long.parseLong(id.getText()));
 				expense.setAmount(Long.parseLong(amount.getText()));
 				Date value = DateUtils.asDate(dateAdded.getValue());
 				expense.setDate(value);
@@ -115,16 +133,16 @@ public class AddExpenseController {
 				expense.setType(newTypeValue);
 
 				boolean addObjectToDatabase = HibernateUtil
-						.addObjectToDatabase(expense);
+						.updateObjectToDatabase(expense);
 				if (addObjectToDatabase == true) {
-					errorLabel.setText("Expense is added successfully");
+					errorLabel.setText("Expense is updated successfully");
 					clearForm(null);
 				} else {
 					errorLabel.setWrapText(true);
 					errorLabel
 							.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
 					errorLabel
-							.setText("Ooops something went wrong, please try again.");
+							.setText(Messages.FORM_SUBMIT_FAILURE_MESSAGE);
 				}
 
 			}
@@ -156,7 +174,7 @@ public class AddExpenseController {
 		// }
 
 		if (!isValid) {
-			errorLabel.setText("Error in form.");
+			errorLabel.setText(Messages.VALIDATION_FAILURE_MESSAGE);
 		}
 		return isValid;
 	}

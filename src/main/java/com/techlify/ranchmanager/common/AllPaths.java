@@ -11,11 +11,13 @@ public class AllPaths {
 	public static final String BASE_PATH	=	"/com/techlify/ranchmanager/fxml/";
 	public static final String MAIN_PAGE	=	BASE_PATH+"Main.fxml"; 
 	public static final String ADD_ANIMAL_PAGE	=	BASE_PATH+"AddAnimal.fxml"; 
-	public static final String VIEW_ANIMAL_PAGE	=	BASE_PATH+"VIEWAnimals.fxml"; 
+	public static final String EDIT_ANIMAL_PAGE	=	BASE_PATH+"EditAnimal.fxml"; 
+	public static final String VIEW_ANIMAL_PAGE	=	BASE_PATH+"ViewAnimals.fxml"; 
 	public static final String ADD_NEW_TYPE_ANIMAL_PAGE	=	BASE_PATH+"AddNewAnimalType.fxml"; 
 	public static final String UPLOAD_IMAGE_PAGE	=	BASE_PATH+"UploadImage.fxml"; 
 	public static final String ADD_EPENSES_PAGE	=	BASE_PATH+"AddExpenses.fxml"; 
-	public static final String VIEW_EPENSES_PAGE	=	BASE_PATH+"ViewExpenses.fxml"; 
+	public static final String VIEW_EXPENSES_PAGE	=	BASE_PATH+"ViewExpenses.fxml"; 
+	public static final String EDIT_EXPENSES_PAGE	=	BASE_PATH+"EditExpenses.fxml"; 
 	
 	/*
 	 * all stylesheet paths

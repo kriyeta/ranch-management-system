@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,6 +45,7 @@ import org.hibernate.Session;
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
+import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.dao.Photo;
 import com.techlify.ranchmanager.main.PrimarySatge;
 import com.techlify.ranchmanager.util.DateUtils;
@@ -65,7 +67,7 @@ public class ViewAnimalsController implements Initializable {
 
 	@FXML
 	private TableColumn dateOfBirth;
-	
+
 	@FXML
 	private VBox filterBox;
 
@@ -84,7 +86,7 @@ public class ViewAnimalsController implements Initializable {
 	@FXML
 	private TableColumn type;
 
-	private Stage viewDetailStage;
+	private Stage editDialogBoxStage;
 
 	private ObservableList<Animal> getInitialTableData() {
 
@@ -106,12 +108,6 @@ public class ViewAnimalsController implements Initializable {
 	 */
 
 	public void initialize(URL location, ResourceBundle resources) {
-		animalsTable
-				.setColumnResizePolicy(new Callback<TableView.ResizeFeatures, Boolean>() {
-					public Boolean call(ResizeFeatures param) {
-						return true;
-					}
-				});
 		id.setCellValueFactory(new PropertyValueFactory<Animal, Long>("id"));
 		numbers.setCellValueFactory(new PropertyValueFactory<Animal, Long>(
 				"numbers"));
@@ -124,10 +120,9 @@ public class ViewAnimalsController implements Initializable {
 
 		// adding actions column
 
-		TableColumn col_action = new TableColumn("DETAILS");
-		col_action.setMinWidth(100);
+		TableColumn col_action = new TableColumn("ACTIONS");
+		col_action.setMinWidth(200);
 		col_action.setSortable(false);
-
 		col_action
 				.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Animal, Boolean>, ObservableValue<Boolean>>() {
 
@@ -207,15 +202,18 @@ public class ViewAnimalsController implements Initializable {
 
 	// Define the button cell
 	private class ButtonCell extends TableCell<Animal, Boolean> {
-		final Button cellButton = new Button("View");
+		final Button detailedViewButton = new Button("Detailed View");
+		final Button editButton = new Button("edit");
+		final HBox actionButtons = new HBox(detailedViewButton,editButton);
+		
 
 		ButtonCell() {
-
-			cellButton.setOnAction(new EventHandler<ActionEvent>() {
+			actionButtons.setSpacing(5.0);
+			detailedViewButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				public void handle(ActionEvent t) {
 					// showing detailed view on view button clicked
-					PrintLog.printLog("View button clicked ");
+					PrintLog.printLog("View animal button clicked ");
 					Animal animal = (Animal) ButtonCell.this.getTableView()
 							.getItems().get(ButtonCell.this.getIndex());
 					PrintLog.printLog(animal);
@@ -225,8 +223,8 @@ public class ViewAnimalsController implements Initializable {
 
 				private void showDetailedView(Animal animal) {
 					// building pop up
-					if (viewDetailStage == null) {
-						viewDetailStage = getPopupScene();
+					if (editDialogBoxStage == null) {
+						editDialogBoxStage = getEditPopupScene();
 					}
 					AnchorPane anchorPane = new AnchorPane();
 					anchorPane
@@ -288,7 +286,7 @@ public class ViewAnimalsController implements Initializable {
 					vBox.getChildren().add(gridPane);
 
 					// showing images
-					
+
 					HBox photosHBox = new HBox();
 					photosHBox.setMaxWidth(600);
 					for (Photo photo : currentAnimalPhotos) {
@@ -308,27 +306,57 @@ public class ViewAnimalsController implements Initializable {
 						photoVBox.getChildren().add(imageViewPane);
 						photosHBox.getChildren().add(photoVBox);
 					}
-					ScrollPane scrollPane	=	new ScrollPane(photosHBox);
+					ScrollPane scrollPane = new ScrollPane(photosHBox);
 					scrollPane.setId("photosScrollPane");
 					scrollPane.setFitToHeight(true);
 					scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 					scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+					vBox.getChildren().add(new Label("PARRENT PHOTOS"));
 					vBox.getChildren().add(scrollPane);
 					Scene dialogScene = new Scene(anchorPane,
 							USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
-					viewDetailStage.setScene(dialogScene);
-					viewDetailStage.show();
+					editDialogBoxStage.setScene(dialogScene);
+					editDialogBoxStage.show();
 
 				}
 
-				/**
-				 * @return
-				 */
-				private Stage getPopupScene() {
-					Stage stage = new Stage();
-					stage.initModality(Modality.NONE);
-					stage.initOwner(PrimarySatge.getPrimaryStage());
-					return stage;
+			});
+
+			editButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				public void handle(ActionEvent t) {
+					// showing detailed view on view button clicked
+					PrintLog.printLog("edit animal button clicked ");
+					Animal animal = (Animal) ButtonCell.this.getTableView()
+							.getItems().get(ButtonCell.this.getIndex());
+					EditAnimalController.currentAnimal	=	animal;
+					PrintLog.printLog(animal);
+					showEditDialogBox(animal);
+
+				}
+
+				private void showEditDialogBox(Animal animal) {
+					// building pop up
+					if (editDialogBoxStage == null) {
+						editDialogBoxStage = getEditPopupScene();
+					}
+
+					Node loadFxmlOnComponent = FXMLUtility
+							.loadFxmlOnComponent(AllPaths.EDIT_ANIMAL_PAGE);
+
+					// details main container
+					VBox vBox = new VBox();
+					vBox.setSpacing(10);
+					vBox.setId("veiwDetailsVBox");
+					vBox.getStylesheets().add(
+							this.getClass()
+									.getResource(AllPaths.FORM_STYLESHEET)
+									.toExternalForm());
+					vBox.getChildren().add(loadFxmlOnComponent);
+					Scene dialogScene = new Scene(vBox, USE_COMPUTED_SIZE,
+							USE_COMPUTED_SIZE);
+					editDialogBoxStage.setScene(dialogScene);
+					editDialogBoxStage.show();
 				}
 			});
 		}
@@ -338,9 +366,19 @@ public class ViewAnimalsController implements Initializable {
 		protected void updateItem(Boolean t, boolean empty) {
 			super.updateItem(t, empty);
 			if (!empty) {
-				setGraphic(cellButton);
+				setGraphic(actionButtons);
 			}
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Stage getEditPopupScene() {
+		Stage stage = new Stage();
+		stage.initModality(Modality.NONE);
+		stage.initOwner(PrimarySatge.getPrimaryStage());
+		return stage;
 	}
 
 }
