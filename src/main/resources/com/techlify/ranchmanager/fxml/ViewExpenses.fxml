@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="viewBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.ViewExpensesController">
+	<children>
+		<VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<Label text="Enter text bellow to filter:">
+					<font>
+						<Font name="System Bold" size="16.0" />
+					</font>
+				</Label>
+				<TextField fx:id="filterText" maxWidth="1.7976931348623157E308" VBox.vgrow="SOMETIMES" />
+				<TableView fx:id="expensesTable" VBox.vgrow="SOMETIMES">
+					<columns>
+						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="ID" />
+						<TableColumn fx:id="amount" maxWidth="1.7976931348623157E308" minWidth="110.0" prefWidth="-1.0" text="AMOUNT" />
+						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="TYPE" />
+						<TableColumn fx:id="dateAdded" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="DATE" />
+						<TableColumn fx:id="details" maxWidth="1.7976931348623157E308" minWidth="110.0" prefWidth="-1.0" text="DETAILS" />
+					</columns>
+				</TableView>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

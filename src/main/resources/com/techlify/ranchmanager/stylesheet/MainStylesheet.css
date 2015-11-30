@@ -3,6 +3,16 @@ AnchorPane {
 	-fx-border-width: 1;
 }
 
+#detailedPane AnchorPane {
+	-fx-border-color: black;
+	-fx-border-width: 0;
+}
+
+Accordion AnchorPane {
+	-fx-border-color: black;
+	-fx-border-width: 0;
+}
+
 Accordion Button {
 	-fx-font-size: 15.0px;
 	-fx-font-weight: bold;

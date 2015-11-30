@@ -57,7 +57,16 @@
                       </TitledPane>
                       <TitledPane animated="false" text="Ranch Expenses">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Button fx:id="addExpenses" mnemonicParsing="false" onAction="#addExpenses" text="Add Expenses" />
+                                          <Button fx:id="viewExpenses" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewExpenses" text="View Expenses" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
                         </content>
                       </TitledPane>
                     </panes>
@@ -70,13 +79,10 @@
          <center>
             <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="TOP_CENTER">
                <children>
-                  <Label fx:id="title">
+                  <Label fx:id="title" text="Label">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets top="30.0" />
-                     </VBox.margin>
                   </Label>
                   <StackPane fx:id="detailedPane" alignment="TOP_CENTER" BorderPane.alignment="CENTER" />
                </children>

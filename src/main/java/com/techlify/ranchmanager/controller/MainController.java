@@ -25,6 +25,7 @@ public class MainController {
 	@FXML
 	private Label title;
 	
+	//animal related controls
 	@FXML
 	private Button addAnimal;
 
@@ -33,6 +34,15 @@ public class MainController {
 
     @FXML
     private Button viewAnimals;
+    
+	//expenses related controls
+    @FXML
+    private Button addExpenses;
+    
+    @FXML
+    private Button viewExpenses;
+  
+    
     
     @FXML
 	private void initialize() {
@@ -52,6 +62,19 @@ public class MainController {
     
     @FXML
     public void viewAnimals(ActionEvent event) {
-    	
+    	title.setText("All Animals");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMAL_PAGE, detailedPane );
+    }
+    
+    @FXML
+    void addExpenses(ActionEvent event) {
+    	title.setText("Add Expense");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.ADD_EPENSES_PAGE, detailedPane );
+    }
+
+    @FXML
+    void viewExpenses(ActionEvent event) {
+    	title.setText("All Expenses");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EPENSES_PAGE, detailedPane );
     }
 }

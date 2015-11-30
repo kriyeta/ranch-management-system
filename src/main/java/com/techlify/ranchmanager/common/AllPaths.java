@@ -11,8 +11,11 @@ public class AllPaths {
 	public static final String BASE_PATH	=	"/com/techlify/ranchmanager/fxml/";
 	public static final String MAIN_PAGE	=	BASE_PATH+"Main.fxml"; 
 	public static final String ADD_ANIMAL_PAGE	=	BASE_PATH+"AddAnimal.fxml"; 
+	public static final String VIEW_ANIMAL_PAGE	=	BASE_PATH+"VIEWAnimals.fxml"; 
 	public static final String ADD_NEW_TYPE_ANIMAL_PAGE	=	BASE_PATH+"AddNewAnimalType.fxml"; 
 	public static final String UPLOAD_IMAGE_PAGE	=	BASE_PATH+"UploadImage.fxml"; 
+	public static final String ADD_EPENSES_PAGE	=	BASE_PATH+"AddExpenses.fxml"; 
+	public static final String VIEW_EPENSES_PAGE	=	BASE_PATH+"ViewExpenses.fxml"; 
 	
 	/*
 	 * all stylesheet paths
@@ -20,4 +23,5 @@ public class AllPaths {
 	public static final String STYLESHEET_BASE_PATH	=	"/com/techlify/ranchmanager/stylesheet/"; 
 	public static final String FORM_STYLESHEET	=	STYLESHEET_BASE_PATH+"forms.css"; 
 	public static final String MAIN_STYLESHEET	=	STYLESHEET_BASE_PATH+"MainStylesheet.css"; 
+	public static final String ANIMAL_DETAILED_VIEW_STYLESHEET	=	STYLESHEET_BASE_PATH+"AnimalDetailedView.css"; 
 }

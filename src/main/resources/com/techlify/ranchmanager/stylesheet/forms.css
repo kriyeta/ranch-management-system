@@ -29,6 +29,15 @@ GridPane{
 	-fx-blend-mode:darken;
 }
 
+#viewBox{
+	-fx-alignment:top-center;
+	-fx-hgap:5.0px;
+	-fx-max-width:-fx-max-width-default;
+	-fx-vgap:10.0px;
+	-fx-padding: 30 10 20 10;
+	-fx-blend-mode:darken;
+}
+
 #addNewAnimalType{
 	-fx-max-width:400.0px;
 	-fx-min-width:400.0px;

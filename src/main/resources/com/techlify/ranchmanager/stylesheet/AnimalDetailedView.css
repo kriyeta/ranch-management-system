@@ -1,0 +1,45 @@
+AnchorPane {
+	-fx-border-color: black;
+	-fx-border-width: 2;
+	-fx-max-width:700;	
+}
+
+#hederTitle{
+	-fx-text-fill: #ffffff;
+	-fx-font-size: 16;
+	-fx-font-weight: bold;
+}
+
+#veiwDetailsVBox {
+	-fx-padding: 2;
+	-fx-spacing: 10;
+	-fx-background-color: #10a7ee;
+	-fx-background-radius: 0;
+}
+
+#viewAnimalDetailsGridPane {
+	-fx-padding: 2;
+	-fx-background-color: #e6e6e6;
+	-fx-background-radius: 5;
+	-fx-border-color: black;
+	-fx-border-width: 2;
+	-fx-padding: 10;
+	-fx-spacing: 10;
+}
+
+#photosScrollPane{
+	-fx-min-width:500;	
+}
+
+#animalImagePane {
+	-fx-padding: 2;
+	-fx-background-color: firebrick;
+	-fx-background-radius: 5;
+}
+
+
+HBox {
+	-fx-background-color: #e6e6e6;
+	-fx-padding: 10;
+	-fx-spacing: 10;
+}

@@ -190,7 +190,7 @@ public class AddAnimalController {
 				boolean addObjectToDatabase = HibernateUtil
 						.addObjectToDatabase(animal);
 				if (addObjectToDatabase == true) {
-					errorLabel.setText("Animal is added successfully");
+					errorLabel.setText("Expense is added successfully");
 					clearForm(null);
 				} else {
 					errorLabel.setWrapText(true);

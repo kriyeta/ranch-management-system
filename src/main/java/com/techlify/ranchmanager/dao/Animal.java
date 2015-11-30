@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -28,7 +29,7 @@ public class Animal {
 	private Long id;
 
 	@Column(name = "NUMBERS")
-	private Long Numbers;
+	private Long numbers;
 
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "TYPE_ID")
@@ -48,7 +49,7 @@ public class Animal {
 	@JoinColumn(name = "MOTHER_ID")
 	private Animal mother;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "ANIMAL_PHOTO", joinColumns = { @JoinColumn(name = "ANIMAL_ID", referencedColumnName = "ANIMAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID", referencedColumnName = "PHOTO_ID") })
 	private List<Photo> photos;
 
@@ -61,11 +62,11 @@ public class Animal {
 	}
 
 	public Long getNumbers() {
-		return Numbers;
+		return numbers;
 	}
 
 	public void setNumbers(Long numbers) {
-		Numbers = numbers;
+		this.numbers = numbers;
 	}
 
 	public AnimalType getTypeId() {
@@ -116,4 +117,11 @@ public class Animal {
 		this.photos = photos;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.typeId+" "+this.id;
+	}
 }

@@ -6,8 +6,10 @@ import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -79,6 +81,17 @@ public class FXMLUtility {
 			e.printStackTrace();
 		}
 		return root;
+	}
+	
+	/**
+	 * @param anchorPane
+	 * @param vBox
+	 */
+	public static void setAnchorToZero(AnchorPane anchorPane, VBox vBox) {
+		anchorPane.setTopAnchor(vBox, 0.0);
+		anchorPane.setRightAnchor(vBox, 0.0);
+		anchorPane.setBottomAnchor(vBox, 0.0);
+		anchorPane.setLeftAnchor(vBox, 0.0);
 	}
 
 }
