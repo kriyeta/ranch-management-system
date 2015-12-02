@@ -20,13 +20,13 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; 
     
-    @Column(name="PHOTO",columnDefinition = "LONGBLOB")
+    @Column(name="PHOTO", columnDefinition = "LONGBLOB")
     private byte[] photo;
     
     @Column(name="NAME")
     private String name;
     
-    @Column(name="DESCRIPTION")
+    @Column(name="DESCRIPTION", columnDefinition = "TEXT")
     private String description;
 
 	public Long getId() {

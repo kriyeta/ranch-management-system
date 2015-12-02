@@ -21,7 +21,7 @@
 						<TableColumn fx:id="amount" maxWidth="1.7976931348623157E308" minWidth="110.0" prefWidth="-1.0" text="AMOUNT" />
 						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="TYPE" />
 						<TableColumn fx:id="dateAdded" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="DATE" />
-						<TableColumn fx:id="details" maxWidth="1.7976931348623157E308" minWidth="110.0" prefWidth="-1.0" text="DETAILS" />
+						<TableColumn fx:id="details" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="DETAILS" />
 					</columns>
 				</TableView>
 			</children>

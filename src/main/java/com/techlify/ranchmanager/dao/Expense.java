@@ -27,7 +27,7 @@ public class Expense {
 	@Column(name = "TYPE")
 	private String type;
 
-	@Column(name = "DETAILS")
+	@Column(name = "DETAILS", columnDefinition = "TEXT")
 	private String details;
 	
 	@Column(name = "AMOUNT")

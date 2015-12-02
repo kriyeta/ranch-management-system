@@ -129,6 +129,7 @@ public class AddExpenseController {
 
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			errorLabel.setWrapText(true);
 			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
 			errorLabel.setText("Ooops something went wrong, please try again.");

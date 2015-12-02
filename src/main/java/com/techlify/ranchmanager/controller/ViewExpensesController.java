@@ -1,6 +1,8 @@
 package com.techlify.ranchmanager.controller;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -8,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,13 +21,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -95,13 +102,33 @@ public class ViewExpensesController implements Initializable {
 				"amount"));
 		type.setCellValueFactory(new PropertyValueFactory<Expense, String>(
 				"type"));
-		details.setCellValueFactory(new PropertyValueFactory<Expense, Long>(
+		details.setCellFactory(new Callback<TableColumn<Expense, String>, TableCell<Expense, String>>() {
+			@Override
+			public TableCell<Expense, String> call(
+					TableColumn<Expense, String> param) {
+				TableCell<Expense, String> cell = new TableCell<>();
+				Text text = new Text();
+				cell.setGraphic(text);
+				cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
+				text.wrappingWidthProperty().bind(cell.widthProperty());
+				text.textProperty().bind(cell.itemProperty());
+				return cell;
+			}
+		});
+		details.setCellValueFactory(new PropertyValueFactory<Expense, String>(
 				"details"));
-		dateAdded.setCellValueFactory(new PropertyValueFactory<Expense, Date>(
-				"date"));
+		dateAdded
+				.setCellValueFactory(new Callback<CellDataFeatures<Expense, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(
+							CellDataFeatures<Expense, String> param) {
+						Date dob = param.getValue().getDate();
+						DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+						return new SimpleStringProperty(df.format(dob));
+					}
+				});
 
 		// adding actions column
-
 		TableColumn col_action = new TableColumn("Actions");
 		col_action.setMinWidth(100);
 		col_action.setSortable(false);
