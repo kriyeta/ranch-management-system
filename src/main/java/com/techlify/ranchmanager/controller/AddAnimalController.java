@@ -23,8 +23,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.techlify.ranchmanager.common.AllPaths;
+import com.techlify.ranchmanager.convertor.AnimalConvertor;
 import com.techlify.ranchmanager.convertor.AnimalTypeConvertor;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
@@ -65,6 +67,18 @@ public class AddAnimalController {
 	private ComboBox<AnimalType> type;
 
 	@FXML
+	private ComboBox<AnimalType> maleParentType;
+
+	@FXML
+	private ComboBox<Animal> maleParent;
+
+	@FXML
+	private ComboBox<AnimalType> femaleParentType;
+
+	@FXML
+	private ComboBox<Animal> femaleParent;
+
+	@FXML
 	private Label maxLimitReachedLabel;
 
 	@FXML
@@ -83,11 +97,67 @@ public class AddAnimalController {
 	private GridPane createUserForm;
 
 	static boolean isFilled = false;
+	static boolean isMaleParentTypeFilled = false;
+	static boolean isFemaleParentTypeFilled = false;
 
 	@FXML
 	private void initialize() {
+		isFilled = false;
+		isMaleParentTypeFilled = false;
+		isFemaleParentTypeFilled = false;
+
 		// adding convertor for type combobox
 		type.setConverter(new AnimalTypeConvertor());
+
+		// adding convertor for type combobox
+		maleParent.setConverter(new AnimalConvertor());
+
+		// adding convertor for type combobox
+		maleParentType.setConverter(new AnimalTypeConvertor());
+
+		maleParentType.setOnAction((event) -> {
+			AnimalType selectedAnimalType = maleParentType.getSelectionModel()
+					.getSelectedItem();
+			PrintLog.printLog("ComboBox Action (selected: "
+					+ selectedAnimalType.toString() + ")");
+			Session session = HibernateUtil.getSession();
+			session.beginTransaction();
+			List<Animal> resultList = session.createCriteria(Animal.class)
+					.add(Restrictions.eq("typeId", selectedAnimalType))
+					.add(Restrictions.eq("gender", "Male")).list();
+			PrintLog.printLog("num of animal types:" + resultList.size());
+			ArrayList<Animal> selectedTypeAnimals = new ArrayList<Animal>();
+			for (Animal next : resultList) {
+				selectedTypeAnimals.add(next);
+			}
+			maleParent.setItems(FXCollections
+					.observableArrayList(selectedTypeAnimals));
+		});
+
+		// adding convertor for type combobox
+		femaleParent.setConverter(new AnimalConvertor());
+
+		// adding convertor for type combobox
+		femaleParentType.setConverter(new AnimalTypeConvertor());
+
+		femaleParentType.setOnAction((event) -> {
+			AnimalType selectedAnimalType = femaleParentType
+					.getSelectionModel().getSelectedItem();
+			PrintLog.printLog("ComboBox Action (selected: "
+					+ selectedAnimalType.toString() + ")");
+			Session session = HibernateUtil.getSession();
+			session.beginTransaction();
+			List<Animal> resultList = session.createCriteria(Animal.class)
+					.add(Restrictions.eq("typeId", selectedAnimalType))
+					.add(Restrictions.eq("gender", "Female")).list();
+			PrintLog.printLog("num of animal types:" + resultList.size());
+			ArrayList<Animal> selectedTypeAnimals = new ArrayList<Animal>();
+			for (Animal next : resultList) {
+				selectedTypeAnimals.add(next);
+			}
+			femaleParent.setItems(FXCollections
+					.observableArrayList(selectedTypeAnimals));
+		});
 
 		// adding one browse button initially
 		addMorePhotos(null);
@@ -111,6 +181,42 @@ public class AddAnimalController {
 	}
 
 	@FXML
+	void fillFemaleParentTypes(MouseEvent event) {
+		if (!isFemaleParentTypeFilled) {
+			Session session = HibernateUtil.getSession();
+			session.beginTransaction();
+			List<AnimalType> resultList = session.createCriteria(
+					AnimalType.class).list();
+			PrintLog.printLog("num of animal types:" + resultList.size());
+			ArrayList<AnimalType> allTypes = new ArrayList<AnimalType>();
+			for (AnimalType next : resultList) {
+				allTypes.add(next);
+			}
+			femaleParentType.setItems(FXCollections
+					.observableArrayList(allTypes));
+			isFemaleParentTypeFilled = true;
+		}
+	}
+
+	@FXML
+	void fillMaleParentTypes(MouseEvent event) {
+		if (!isMaleParentTypeFilled) {
+			Session session = HibernateUtil.getSession();
+			session.beginTransaction();
+			List<AnimalType> resultList = session.createCriteria(
+					AnimalType.class).list();
+			PrintLog.printLog("num of animal types:" + resultList.size());
+			ArrayList<AnimalType> allTypes = new ArrayList<AnimalType>();
+			for (AnimalType next : resultList) {
+				allTypes.add(next);
+			}
+			maleParentType
+					.setItems(FXCollections.observableArrayList(allTypes));
+			isMaleParentTypeFilled = true;
+		}
+	}
+
+	@FXML
 	void addMorePhotos(ActionEvent event) {
 		HBox uploadImageHBox = (HBox) FXMLUtility
 				.loadFxmlOnComponent(AllPaths.UPLOAD_IMAGE_PAGE);
@@ -126,7 +232,7 @@ public class AddAnimalController {
 	void fillAnimalTypes(MouseEvent event) {
 
 		if (!isFilled) {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			Session session = HibernateUtil.getSession();
 			session.beginTransaction();
 			List<AnimalType> resultList = session.createCriteria(
 					AnimalType.class).list();
@@ -148,11 +254,15 @@ public class AddAnimalController {
 		try {
 			if (isValid) {
 				Animal animal = new Animal();
-				animal.setNumbers(Long.parseLong(numbers.getText()));
+				animal.setNumbers(numbers.getText());
 				animal.setTypeId(type.getSelectionModel().getSelectedItem());
 				animal.setGender(gender.getSelectionModel().getSelectedItem());
 				Date value = DateUtils.asDate(dateOfBirth.getValue());
 				animal.setDateOfBirth(value);
+				animal.setMaleParent(maleParent.getSelectionModel()
+						.getSelectedItem());
+				animal.setFemaleParent(femaleParent.getSelectionModel()
+						.getSelectedItem());
 
 				ObservableList<Node> children = photosGroup.getChildren();
 				LinkedList<Photo> allPhotos = new LinkedList<Photo>();

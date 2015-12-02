@@ -39,6 +39,11 @@ public class AnimalType {
 		this.description = description;
 	}
      
-//    @OneToMany(mappedBy="department",cascade=CascadeType.PERSIST)
-//    private  long
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.getName() + " (" + this.getId() + ")";
+	}
 }

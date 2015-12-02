@@ -29,8 +29,8 @@ public class Animal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "NUMBERS")
-	private Long numbers;
+	@Column(name = "NUMBERS", unique=true)
+	private String numbers;
 
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "TYPE_ID")
@@ -46,6 +46,14 @@ public class Animal {
 	@JoinTable(name = "ANIMAL_PHOTO", joinColumns = { @JoinColumn(name = "ANIMAL_ID", referencedColumnName = "ANIMAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "PHOTO_ID", referencedColumnName = "PHOTO_ID") })
 	private List<Photo> photos;
 
+	@ManyToOne
+	@JoinColumn(name = "MALE_PARENT_ID")
+	private Animal maleParent;
+
+	@ManyToOne
+	@JoinColumn(name = "FEMALE_PARENT_ID")
+	private Animal femaleParent;
+
 	public Long getId() {
 		return id;
 	}
@@ -54,11 +62,11 @@ public class Animal {
 		this.id = id;
 	}
 
-	public Long getNumbers() {
+	public String getNumbers() {
 		return numbers;
 	}
 
-	public void setNumbers(Long numbers) {
+	public void setNumbers(String numbers) {
 		this.numbers = numbers;
 	}
 
@@ -93,6 +101,22 @@ public class Animal {
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
 	}
+	
+	public Animal getMaleParent() {
+		return maleParent;
+	}
+
+	public void setMaleParent(Animal maleParent) {
+		this.maleParent = maleParent;
+	}
+
+	public Animal getFemaleParent() {
+		return femaleParent;
+	}
+
+	public void setFemaleParent(Animal femaleParent) {
+		this.femaleParent = femaleParent;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -101,6 +125,6 @@ public class Animal {
 	 */
 	@Override
 	public String toString() {
-		return this.typeId + " " + this.id;
+		return "animal #"+this.getNumbers() + " ( id: " + this.getId() + ")";
 	}
 }

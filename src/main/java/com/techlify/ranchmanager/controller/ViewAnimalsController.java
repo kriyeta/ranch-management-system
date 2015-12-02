@@ -2,6 +2,8 @@ package com.techlify.ranchmanager.controller;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -9,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +27,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -33,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -45,7 +49,6 @@ import org.hibernate.Session;
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
-import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.dao.Photo;
 import com.techlify.ranchmanager.main.PrimarySatge;
 import com.techlify.ranchmanager.util.DateUtils;
@@ -111,12 +114,24 @@ public class ViewAnimalsController implements Initializable {
 		id.setCellValueFactory(new PropertyValueFactory<Animal, Long>("id"));
 		numbers.setCellValueFactory(new PropertyValueFactory<Animal, Long>(
 				"numbers"));
-		type.setCellValueFactory(new PropertyValueFactory<Animal, AnimalType>(
-				"typeId"));
+		type.setCellValueFactory(new Callback<CellDataFeatures<Animal, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(
+					CellDataFeatures<Animal, String> param) {
+				return new SimpleStringProperty(param.getValue().getTypeId().getName());
+			}
+		});
 		gender.setCellValueFactory(new PropertyValueFactory<Animal, Long>(
 				"gender"));
-		dateOfBirth.setCellValueFactory(new PropertyValueFactory<Animal, Date>(
-				"dateOfBirth"));
+		dateOfBirth.setCellValueFactory(new Callback<CellDataFeatures<Animal, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(
+					CellDataFeatures<Animal, String> param) {
+				Date dob = param.getValue().getDateOfBirth();
+				DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+				return new SimpleStringProperty(df.format(dob));
+			}
+		});
 
 		// adding actions column
 
@@ -204,8 +219,7 @@ public class ViewAnimalsController implements Initializable {
 	private class ButtonCell extends TableCell<Animal, Boolean> {
 		final Button detailedViewButton = new Button("Detailed View");
 		final Button editButton = new Button("edit");
-		final HBox actionButtons = new HBox(detailedViewButton,editButton);
-		
+		final HBox actionButtons = new HBox(detailedViewButton, editButton);
 
 		ButtonCell() {
 			actionButtons.setSpacing(5.0);
@@ -221,105 +235,6 @@ public class ViewAnimalsController implements Initializable {
 
 				}
 
-				private void showDetailedView(Animal animal) {
-					// building pop up
-					if (editDialogBoxStage == null) {
-						editDialogBoxStage = getEditPopupScene();
-					}
-					AnchorPane anchorPane = new AnchorPane();
-					anchorPane
-							.getStylesheets()
-							.add(this
-									.getClass()
-									.getResource(
-											AllPaths.ANIMAL_DETAILED_VIEW_STYLESHEET)
-									.toExternalForm());
-
-					// details main container
-					VBox vBox = new VBox();
-					vBox.setSpacing(10);
-					vBox.setId("veiwDetailsVBox");
-
-					FXMLUtility.setAnchorToZero(anchorPane, vBox);
-					anchorPane.getChildren().add(vBox);
-					Label hederTitle = new Label(
-							"DETAILED VIEW FOR ANIMAL WITH ID "
-									+ animal.getId());
-					hederTitle.setId("hederTitle");
-					vBox.getChildren().add(hederTitle);
-
-					// parse animal object
-					Long currentAnimalId = animal.getId();
-					Long currentAnimalNumbers = animal.getNumbers();
-					Date currentAnimalDateOfBirth = animal.getDateOfBirth();
-					String currentAnimalGender = animal.getGender();
-					AnimalType currentAnimalTypeId = animal.getTypeId();
-					List<Photo> currentAnimalPhotos = animal.getPhotos();
-
-					// build animal details gui
-
-					// showing attributes
-					GridPane gridPane = new GridPane();
-					gridPane.setId("viewAnimalDetailsGridPane");
-					gridPane.setHgap(15);
-					gridPane.setVgap(2);
-					gridPane.add(new Text("ID"), 0, 0);
-					gridPane.add(new Text(":"), 1, 0);
-					gridPane.add(new Text(String.valueOf(currentAnimalId)), 2,
-							0);
-					gridPane.add(new Text("NUMBERS"), 0, 1);
-					gridPane.add(new Text(":"), 1, 1);
-					gridPane.add(
-							new Text(String.valueOf(currentAnimalNumbers)), 2,
-							1);
-					gridPane.add(new Text("DATE OF BIRTH"), 0, 2);
-					gridPane.add(new Text(":"), 1, 2);
-					gridPane.add(
-							new Text(DateUtils.asLocalDate(
-									currentAnimalDateOfBirth).toString()), 2, 2);
-					gridPane.add(new Text("GENDER"), 0, 3);
-					gridPane.add(new Text(":"), 1, 3);
-					gridPane.add(new Text(currentAnimalGender), 2, 3);
-					gridPane.add(new Text("TYPE"), 0, 4);
-					gridPane.add(new Text(":"), 1, 4);
-					gridPane.add(new Text(currentAnimalTypeId.getName()), 2, 4);
-					vBox.getChildren().add(gridPane);
-
-					// showing images
-
-					HBox photosHBox = new HBox();
-					photosHBox.setMaxWidth(600);
-					for (Photo photo : currentAnimalPhotos) {
-						VBox photoVBox = new VBox();
-						photoVBox.getChildren().add(
-								new Text("ID: " + photo.getId()));
-						byte[] animalImage = photo.getPhoto();
-						StackPane imageViewPane = new StackPane();
-						imageViewPane.setId("animalImagePane");
-						ImageView imageView = new ImageView();
-						imageView.setImage(new Image(new ByteArrayInputStream(
-								animalImage)));
-						imageView.setFitWidth(150);
-						imageView.setFitHeight(200);
-						imageView.setPreserveRatio(false);
-						imageViewPane.getChildren().add(imageView);
-						photoVBox.getChildren().add(imageViewPane);
-						photosHBox.getChildren().add(photoVBox);
-					}
-					ScrollPane scrollPane = new ScrollPane(photosHBox);
-					scrollPane.setId("photosScrollPane");
-					scrollPane.setFitToHeight(true);
-					scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
-					scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
-					vBox.getChildren().add(new Label("PARRENT PHOTOS"));
-					vBox.getChildren().add(scrollPane);
-					Scene dialogScene = new Scene(anchorPane,
-							USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
-					editDialogBoxStage.setScene(dialogScene);
-					editDialogBoxStage.show();
-
-				}
-
 			});
 
 			editButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -329,35 +244,12 @@ public class ViewAnimalsController implements Initializable {
 					PrintLog.printLog("edit animal button clicked ");
 					Animal animal = (Animal) ButtonCell.this.getTableView()
 							.getItems().get(ButtonCell.this.getIndex());
-					EditAnimalController.currentAnimal	=	animal;
+					EditAnimalController.currentAnimal = animal;
 					PrintLog.printLog(animal);
 					showEditDialogBox(animal);
 
 				}
 
-				private void showEditDialogBox(Animal animal) {
-					// building pop up
-					if (editDialogBoxStage == null) {
-						editDialogBoxStage = getEditPopupScene();
-					}
-
-					Node loadFxmlOnComponent = FXMLUtility
-							.loadFxmlOnComponent(AllPaths.EDIT_ANIMAL_PAGE);
-
-					// details main container
-					VBox vBox = new VBox();
-					vBox.setSpacing(10);
-					vBox.setId("veiwDetailsVBox");
-					vBox.getStylesheets().add(
-							this.getClass()
-									.getResource(AllPaths.FORM_STYLESHEET)
-									.toExternalForm());
-					vBox.getChildren().add(loadFxmlOnComponent);
-					Scene dialogScene = new Scene(vBox, USE_COMPUTED_SIZE,
-							USE_COMPUTED_SIZE);
-					editDialogBoxStage.setScene(dialogScene);
-					editDialogBoxStage.show();
-				}
 			});
 		}
 
@@ -379,6 +271,163 @@ public class ViewAnimalsController implements Initializable {
 		stage.initModality(Modality.NONE);
 		stage.initOwner(PrimarySatge.getPrimaryStage());
 		return stage;
+	}
+
+	private void showDetailedView(Animal animal) {
+		// building pop up
+		if (editDialogBoxStage == null) {
+			editDialogBoxStage = getEditPopupScene();
+		}
+		AnchorPane anchorPane = new AnchorPane();
+		anchorPane.getStylesheets().add(
+				this.getClass()
+						.getResource(AllPaths.ANIMAL_DETAILED_VIEW_STYLESHEET)
+						.toExternalForm());
+
+		// details main container
+		VBox vBox = new VBox();
+		vBox.setSpacing(10);
+		vBox.setId("veiwDetailsVBox");
+
+		FXMLUtility.setAnchorToZero(anchorPane, vBox);
+		anchorPane.getChildren().add(vBox);
+		Label hederTitle = new Label("DETAILED VIEW FOR ANIMAL WITH ID "
+				+ animal.getId());
+		hederTitle.setId("hederTitle");
+		vBox.getChildren().add(hederTitle);
+
+		// parse animal object
+		Long currentAnimalId = animal.getId();
+		String currentAnimalNumbers = animal.getNumbers();
+		Date currentAnimalDateOfBirth = animal.getDateOfBirth();
+		String currentAnimalGender = animal.getGender();
+		AnimalType currentAnimalTypeId = animal.getTypeId();
+		Animal currentMaleParent = animal.getMaleParent();
+		Animal currentFemaleParent = animal.getFemaleParent();
+		List<Photo> currentAnimalPhotos = animal.getPhotos();
+
+		// build animal details gui
+
+		// showing attributes
+		GridPane gridPane = new GridPane();
+		gridPane.setId("viewAnimalDetailsGridPane");
+		gridPane.setHgap(15);
+		gridPane.setVgap(2);
+		gridPane.add(new Text("ID"), 0, 0);
+		gridPane.add(new Text(":"), 1, 0);
+		gridPane.add(new Text(String.valueOf(currentAnimalId)), 2, 0);
+		gridPane.add(new Text("ANIMAL #"), 0, 1);
+		gridPane.add(new Text(":"), 1, 1);
+		gridPane.add(new Text(String.valueOf(currentAnimalNumbers)), 2, 1);
+		gridPane.add(new Text("DATE OF BIRTH"), 0, 2);
+		gridPane.add(new Text(":"), 1, 2);
+		gridPane.add(new Text(DateUtils.asLocalDate(currentAnimalDateOfBirth)
+				.toString()), 2, 2);
+		gridPane.add(new Text("GENDER"), 0, 3);
+		gridPane.add(new Text(":"), 1, 3);
+		gridPane.add(new Text(currentAnimalGender), 2, 3);
+		gridPane.add(new Text("TYPE"), 0, 4);
+		gridPane.add(new Text(":"), 1, 4);
+		gridPane.add(new Text(currentAnimalTypeId.getName()), 2, 4);
+		if (currentMaleParent != null) {
+			gridPane.add(new Text("MALE PARENT"), 0, 5);
+			gridPane.add(new Text(":"), 1, 5);
+			HBox maleParentBox = new HBox();
+			maleParentBox.getChildren().add(
+					new Text(currentMaleParent.toString()));
+			Button maleParentButton = new Button("View Details");
+
+			maleParentButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				public void handle(ActionEvent t) {
+					// showing detailed view on view button clicked
+					PrintLog.printLog("View animal button clicked "
+							+ animal.getMaleParent());
+					showDetailedView(animal.getMaleParent());
+
+				}
+			});
+			maleParentBox.getChildren().add(maleParentButton);
+			gridPane.add(maleParentBox, 2, 5);
+		}
+		if (currentFemaleParent != null) {
+			gridPane.add(new Text("FEMALE PARENT"), 0, 6);
+			gridPane.add(new Text(":"), 1, 6);
+			HBox femaleParentBox = new HBox();
+			femaleParentBox.getChildren().add(
+					new Text(currentFemaleParent.toString()));
+			Button femaleParentButton = new Button("View Details");
+
+			femaleParentButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				public void handle(ActionEvent t) {
+					// showing detailed view on view button clicked
+					PrintLog.printLog("View animal button clicked "
+							+ animal.getFemaleParent());
+					showDetailedView(animal.getFemaleParent());
+
+				}
+			});
+			femaleParentBox.getChildren().add(femaleParentButton);
+			gridPane.add(femaleParentBox, 2, 6);
+		}
+		vBox.getChildren().add(gridPane);
+
+		// showing images
+
+		HBox photosHBox = new HBox();
+		photosHBox.setMaxWidth(600);
+		for (Photo photo : currentAnimalPhotos) {
+			VBox photoVBox = new VBox();
+			photoVBox.getChildren().add(new Text("ID: " + photo.getId()));
+			byte[] animalImage = photo.getPhoto();
+			StackPane imageViewPane = new StackPane();
+			imageViewPane.setId("animalImagePane");
+			ImageView imageView = new ImageView();
+			imageView
+					.setImage(new Image(new ByteArrayInputStream(animalImage)));
+			imageView.setFitWidth(150);
+			imageView.setFitHeight(200);
+			imageView.setPreserveRatio(false);
+			imageViewPane.getChildren().add(imageView);
+			photoVBox.getChildren().add(imageViewPane);
+			photosHBox.getChildren().add(photoVBox);
+		}
+		ScrollPane scrollPane = new ScrollPane(photosHBox);
+		scrollPane.setId("photosScrollPane");
+		scrollPane.setFitToHeight(true);
+		scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+		scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
+		vBox.getChildren().add(new Label("PHOTOS"));
+		vBox.getChildren().add(scrollPane);
+		Scene dialogScene = new Scene(anchorPane, Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE);
+		editDialogBoxStage.setScene(dialogScene);
+		editDialogBoxStage.show();
+
+	}
+
+	private void showEditDialogBox(Animal animal) {
+		// building pop up
+		if (editDialogBoxStage == null) {
+			editDialogBoxStage = getEditPopupScene();
+		}
+
+		Node loadFxmlOnComponent = FXMLUtility
+				.loadFxmlOnComponent(AllPaths.EDIT_ANIMAL_PAGE);
+
+		// details main container
+		VBox vBox = new VBox();
+		vBox.setSpacing(10);
+		vBox.setId("veiwDetailsVBox");
+		vBox.getStylesheets().add(
+				this.getClass().getResource(AllPaths.FORM_STYLESHEET)
+						.toExternalForm());
+		vBox.getChildren().add(loadFxmlOnComponent);
+		Scene dialogScene = new Scene(vBox, Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE);
+		editDialogBoxStage.setScene(dialogScene);
+		editDialogBoxStage.show();
 	}
 
 }

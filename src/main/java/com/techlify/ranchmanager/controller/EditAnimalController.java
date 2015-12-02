@@ -149,7 +149,7 @@ public class EditAnimalController {
 			if (isValid) {
 				Animal animal = new Animal();
 				animal.setId(Long.parseLong(id.getText()));
-				animal.setNumbers(Long.parseLong(numbers.getText()));
+				animal.setNumbers(numbers.getText());
 				animal.setTypeId(type.getSelectionModel().getSelectedItem());
 				animal.setGender(gender.getSelectionModel().getSelectedItem());
 				Date value = DateUtils.asDate(dateOfBirth.getValue());

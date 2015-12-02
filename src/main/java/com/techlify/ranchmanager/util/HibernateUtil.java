@@ -63,5 +63,16 @@ public class HibernateUtil {
 		}
 		
 	}
+	
+	/**
+	 * @return
+	 */
+	public static Session getSession() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		if(session!=null){
+			session = HibernateUtil.getSessionFactory().openSession();
+		}
+		return session;
+	}
 
 }
