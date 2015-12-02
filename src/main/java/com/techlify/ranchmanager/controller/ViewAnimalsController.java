@@ -66,8 +66,6 @@ public class ViewAnimalsController implements Initializable {
 	@FXML
 	private TableView<Animal> animalsTable;
 
-	private ObservableList data;
-
 	@FXML
 	private TableColumn dateOfBirth;
 
@@ -89,7 +87,8 @@ public class ViewAnimalsController implements Initializable {
 	@FXML
 	private TableColumn type;
 
-	private Stage editDialogBoxStage;
+	private static Stage editDialogBoxStage;
+	private ObservableList data;
 
 	private ObservableList<Animal> getInitialTableData() {
 
@@ -118,20 +117,32 @@ public class ViewAnimalsController implements Initializable {
 			@Override
 			public ObservableValue<String> call(
 					CellDataFeatures<Animal, String> param) {
-				return new SimpleStringProperty(param.getValue().getTypeId().getName());
+				try {
+					return new SimpleStringProperty(param.getValue()
+							.getTypeId().getName());
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		});
 		gender.setCellValueFactory(new PropertyValueFactory<Animal, Long>(
 				"gender"));
-		dateOfBirth.setCellValueFactory(new Callback<CellDataFeatures<Animal, String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(
-					CellDataFeatures<Animal, String> param) {
-				Date dob = param.getValue().getDateOfBirth();
-				DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-				return new SimpleStringProperty(df.format(dob));
-			}
-		});
+		dateOfBirth
+				.setCellValueFactory(new Callback<CellDataFeatures<Animal, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(
+							CellDataFeatures<Animal, String> param) {
+						try {
+							Date dob = param.getValue().getDateOfBirth();
+							DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+							return new SimpleStringProperty(df.format(dob));
+						} catch (Exception e) {
+							e.printStackTrace();
+							return null;
+						}
+					}
+				});
 
 		// adding actions column
 
@@ -266,22 +277,21 @@ public class ViewAnimalsController implements Initializable {
 	/**
 	 * @return
 	 */
-	private Stage getEditPopupScene() {
+	private static Stage getEditPopupScene() {
 		Stage stage = new Stage();
 		stage.initModality(Modality.NONE);
 		stage.initOwner(PrimarySatge.getPrimaryStage());
 		return stage;
 	}
 
-	private void showDetailedView(Animal animal) {
+	public static void showDetailedView(Animal animal) {
 		// building pop up
 		if (editDialogBoxStage == null) {
 			editDialogBoxStage = getEditPopupScene();
 		}
 		AnchorPane anchorPane = new AnchorPane();
 		anchorPane.getStylesheets().add(
-				this.getClass()
-						.getResource(AllPaths.ANIMAL_DETAILED_VIEW_STYLESHEET)
+				ViewAnimalsController.class.getResource(AllPaths.ANIMAL_DETAILED_VIEW_STYLESHEET)
 						.toExternalForm());
 
 		// details main container
@@ -306,7 +316,10 @@ public class ViewAnimalsController implements Initializable {
 		Animal currentFemaleParent = animal.getFemaleParent();
 		List<Photo> currentAnimalPhotos = animal.getPhotos();
 
-		// build animal details gui
+		/*
+		 *  build animal details gui
+		 *  
+		 */
 
 		// showing attributes
 		GridPane gridPane = new GridPane();

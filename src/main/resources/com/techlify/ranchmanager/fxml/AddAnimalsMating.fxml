@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane fx:id="createUserForm" hgap="10.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.AddAnimalsMatingController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" percentWidth="25.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="2.0" percentWidth="3.0" prefWidth="6.0" />
+		<ColumnConstraints hgrow="SOMETIMES" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+		<RowConstraints valignment="TOP" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<VBox GridPane.columnIndex="2" GridPane.rowIndex="4">
+			<children>
+				<DatePicker fx:id="endDate" />
+			</children>
+		</VBox>
+		<VBox spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+			<children>
+				<ComboBox fx:id="maleParentType" onMouseClicked="#fillMaleParentTypes" prefWidth="150.0" promptText="Please Select Male Type" />
+				<ComboBox fx:id="maleParent" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="Please Select Male Animal" />
+			</children>
+		</VBox>
+		<VBox spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+			<children>
+				<ComboBox fx:id="femaleParentType" onMouseClicked="#fillFemaleParentTypes" prefWidth="150.0" promptText="Please Select Female Type" />
+				<ComboBox fx:id="femaleParent" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="Please Select Female Animal" />
+			</children>
+		</VBox>
+		<Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitForm" text="SUBMIT" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+		<Button fx:id="resetButton" mnemonicParsing="false" onAction="#clearForm" text="RESET" GridPane.rowIndex="5" />
+		<Label layoutX="20.0" layoutY="87.0" text="End date" GridPane.rowIndex="4" />
+		<Label layoutX="169.0" layoutY="247.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+		<Label fx:id="errorLabel" GridPane.columnSpan="2147483647" />
+		<Label text="Male Animal" GridPane.rowIndex="1" />
+		<Label text="Female Animal" GridPane.rowIndex="2" />
+		<Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Start Date" GridPane.rowIndex="3" />
+      <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <DatePicker fx:id="startDate" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+	</children>
+</GridPane>

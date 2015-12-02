@@ -30,9 +30,6 @@ public class MainController {
 	private Button addAnimal;
 
     @FXML
-    private Button updateAnimal;
-
-    @FXML
     private Button viewAnimals;
     
 	//expenses related controls
@@ -42,6 +39,12 @@ public class MainController {
     @FXML
     private Button viewExpenses;
   
+    //Animals Mating related controls
+    @FXML
+    private Button addAnimalsMating;
+    
+    @FXML
+    private Button viewAnimalsMating;
     
     
     @FXML
@@ -76,5 +79,17 @@ public class MainController {
     void viewExpenses(ActionEvent event) {
     	title.setText("All Expenses");
     	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EXPENSES_PAGE, detailedPane );
+    }
+    
+    @FXML
+    void addAnimalsMating(ActionEvent event) {
+    	title.setText("Add Animals Mating");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.ADD_ANIMALS_MATING_PAGE, detailedPane );
+    }
+
+    @FXML
+    void viewAnimalsMating(ActionEvent event) {
+    	title.setText("All Animals Mating");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMALS_MATING_PAGE, detailedPane );
     }
 }

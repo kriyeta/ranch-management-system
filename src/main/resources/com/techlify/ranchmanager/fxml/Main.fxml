@@ -51,7 +51,15 @@
                       </TitledPane>
                       <TitledPane animated="false" text="Animals Mating">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Button fx:id="addAnimalsMating" mnemonicParsing="false" onAction="#addAnimalsMating" text="Add Animals Mating" />
+                                          <Button fx:id="viewAnimalsMating" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#viewAnimalsMating" text="View Animals Matings" />
+                                       </children>
+                                    </VBox>
+                                 </children></AnchorPane>
                         </content>
                       </TitledPane>
                       <TitledPane animated="false" text="Ranch Expenses">

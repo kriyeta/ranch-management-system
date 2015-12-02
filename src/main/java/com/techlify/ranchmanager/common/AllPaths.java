@@ -18,6 +18,8 @@ public class AllPaths {
 	public static final String ADD_EPENSES_PAGE	=	BASE_PATH+"AddExpenses.fxml"; 
 	public static final String VIEW_EXPENSES_PAGE	=	BASE_PATH+"ViewExpenses.fxml"; 
 	public static final String EDIT_EXPENSES_PAGE	=	BASE_PATH+"EditExpenses.fxml"; 
+	public static final String ADD_ANIMALS_MATING_PAGE	=	BASE_PATH+"AddAnimalsMating.fxml"; 
+	public static final String VIEW_ANIMALS_MATING_PAGE	=	BASE_PATH+"ViewAnimalsMating.fxml"; 
 	
 	/*
 	 * all stylesheet paths

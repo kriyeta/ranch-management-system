@@ -21,7 +21,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -39,7 +38,6 @@ import javafx.util.Callback;
 import org.hibernate.Session;
 
 import com.techlify.ranchmanager.common.AllPaths;
-import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.main.PrimarySatge;
 import com.techlify.ranchmanager.util.FXMLUtility;
@@ -106,13 +104,18 @@ public class ViewExpensesController implements Initializable {
 			@Override
 			public TableCell<Expense, String> call(
 					TableColumn<Expense, String> param) {
-				TableCell<Expense, String> cell = new TableCell<>();
-				Text text = new Text();
-				cell.setGraphic(text);
-				cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
-				text.wrappingWidthProperty().bind(cell.widthProperty());
-				text.textProperty().bind(cell.itemProperty());
-				return cell;
+				try {
+					TableCell<Expense, String> cell = new TableCell<>();
+					Text text = new Text();
+					cell.setGraphic(text);
+					cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
+					text.wrappingWidthProperty().bind(cell.widthProperty());
+					text.textProperty().bind(cell.itemProperty());
+					return cell;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return null;
+				}
 			}
 		});
 		details.setCellValueFactory(new PropertyValueFactory<Expense, String>(
@@ -122,9 +125,14 @@ public class ViewExpensesController implements Initializable {
 					@Override
 					public ObservableValue<String> call(
 							CellDataFeatures<Expense, String> param) {
-						Date dob = param.getValue().getDate();
-						DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-						return new SimpleStringProperty(df.format(dob));
+						try {
+							Date dob = param.getValue().getDate();
+							DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+							return new SimpleStringProperty(df.format(dob));
+						} catch (Exception e) {
+							e.printStackTrace();
+							return null;
+						}
 					}
 				});
 
