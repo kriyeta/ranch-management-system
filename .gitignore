@@ -23,5 +23,9 @@ target/
 .project
 .settings/
 
+#other generated files
+derby.log
+ranch-manager-data
+
 # mac #
 .DS_Store
