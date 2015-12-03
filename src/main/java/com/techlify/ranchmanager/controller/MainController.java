@@ -50,6 +50,7 @@ public class MainController {
     @FXML
 	private void initialize() {
     	mainMenu.setExpandedPane(mainMenu.getPanes().get(0));
+    	viewAnimals(null);
 	}
 
     @FXML

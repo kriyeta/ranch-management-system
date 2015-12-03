@@ -86,7 +86,7 @@
          <center>
             <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="TOP_CENTER">
                <children>
-                  <Label fx:id="title" text="Label">
+                  <Label fx:id="title" text="Select Task To Perform">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
