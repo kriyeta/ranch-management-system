@@ -11,12 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * @author kamal
  *
  */
 @Entity
 @Table(name = "ANIMAL_MATING")
+@DynamicUpdate(value=true)
 public class AnimalsMating {
 	
 	@Id

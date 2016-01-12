@@ -64,7 +64,7 @@
       <Label layoutX="128.0" layoutY="66.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <VBox layoutX="150.0" layoutY="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="id" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="id" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </VBox>
 	</children>

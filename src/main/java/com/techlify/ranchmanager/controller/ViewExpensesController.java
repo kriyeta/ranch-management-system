@@ -73,16 +73,16 @@ public class ViewExpensesController implements Initializable {
 	private TableColumn type;
 
 	@FXML
-	private TableView<Expense> expensesTable;
+	public TableView<Expense> expensesTable;
 
 	@FXML
 	private TableColumn dateAdded;
 
 	private Stage editDialogBoxStage;
 
-	private ObservableList data;
+	public static ObservableList data;
 
-	private ObservableList<Expense> getInitialTableData() {
+	public static ObservableList<Expense> getInitialTableData() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();

@@ -9,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * @author kamal
  *
  */
 @Entity
 @Table(name = "EXPENSE")
+@DynamicUpdate(value=true)
 public class Expense {
 	@Id
 	@Column(name = "EXPENSE_ID")

@@ -46,8 +46,9 @@ public class FXMLUtility {
 	 * @param stage
 	 * @return 
 	 * @return 
+	 * @return 
 	 */
-	public static Node loadFxmlOnStackPane(String fxmlResourcePath, StackPane stackPane) {
+	public static  Object loadFxmlOnStackPane(String fxmlResourcePath, StackPane stackPane) {
 		URL location=FXMLUtility.class.getResource(fxmlResourcePath);
 		System.out.println(location);
 		FXMLLoader fxmlLoader=new FXMLLoader(location);
@@ -60,7 +61,7 @@ public class FXMLUtility {
 		}
 		stackPane.getChildren().clear();
 		stackPane.getChildren().add(root);
-		return root;
+		return fxmlLoader.getController();
 	}
 	
 	/**

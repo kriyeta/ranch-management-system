@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 
 import org.hibernate.Session;
 
+import com.techlify.ranchmanager.common.AllControllers;
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.common.Messages;
 import com.techlify.ranchmanager.dao.Animal;
@@ -92,10 +93,20 @@ public class EditAnimalController {
 	@FXML
 	private void initialize() {
 		id.setText(currentAnimal.getId().toString());
+		
+		// setting genders
+		ArrayList<String> allGenders = new ArrayList<String>();
+		allGenders.add("Male");
+		allGenders.add("Female");
+		gender.setItems(FXCollections.observableArrayList(allGenders));
 		gender.getSelectionModel().select(currentAnimal.getGender());
+		
 		dateOfBirth.setValue(DateUtils.asLocalDate(currentAnimal
 				.getDateOfBirth()));
+		
 		numbers.setText(currentAnimal.getNumbers().toString());
+		
+		isFilled = false;
 		type.getSelectionModel().select(currentAnimal.getTypeId());
 	}
 
@@ -148,7 +159,10 @@ public class EditAnimalController {
 		try {
 			if (isValid) {
 				Animal animal = new Animal();
+				long animalId = Long.parseLong(id.getText());
 				animal.setId(Long.parseLong(id.getText()));
+				Animal animalFromDb = (Animal) HibernateUtil
+						.getObjectFromDatabase(Animal.class, animalId);
 				animal.setNumbers(numbers.getText());
 				animal.setTypeId(type.getSelectionModel().getSelectedItem());
 				animal.setGender(gender.getSelectionModel().getSelectedItem());
@@ -185,7 +199,8 @@ public class EditAnimalController {
 						}
 					}
 				}
-
+				List<Photo> photos = animalFromDb.getPhotos();
+				allPhotos.addAll(photos);
 				animal.setPhotos(allPhotos);
 
 				boolean addObjectToDatabase = HibernateUtil
@@ -207,6 +222,11 @@ public class EditAnimalController {
 			errorLabel.setWrapText(true);
 			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
 			errorLabel.setText(Messages.FORM_SUBMIT_FAILURE_MESSAGE);
+		} finally {
+			ViewAnimalsController.data = ViewAnimalsController
+					.getInitialTableData();
+			AllControllers.viewAnimalsController.animalsTable
+					.setItems(ViewAnimalsController.data);
 		}
 
 	}

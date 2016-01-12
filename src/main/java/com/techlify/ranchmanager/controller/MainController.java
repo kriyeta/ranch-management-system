@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
+import com.techlify.ranchmanager.common.AllControllers;
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.util.FXMLUtility;
 
@@ -67,7 +68,7 @@ public class MainController {
     @FXML
     public void viewAnimals(ActionEvent event) {
     	title.setText("All Animals");
-    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMAL_PAGE, detailedPane );
+    	AllControllers.viewAnimalsController = (ViewAnimalsController)FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMAL_PAGE, detailedPane );
     }
     
     @FXML
@@ -79,7 +80,7 @@ public class MainController {
     @FXML
     void viewExpenses(ActionEvent event) {
     	title.setText("All Expenses");
-    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EXPENSES_PAGE, detailedPane );
+    	AllControllers.viewExpensesController	=	(ViewExpensesController) FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_EXPENSES_PAGE, detailedPane );
     }
     
     @FXML
@@ -92,5 +93,17 @@ public class MainController {
     void viewAnimalsMating(ActionEvent event) {
     	title.setText("All Animals Mating");
     	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMALS_MATING_PAGE, detailedPane );
+    }
+    
+    @FXML
+    void exportData(ActionEvent event) {
+    	title.setText("EXPORT DATA");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.EXPORT_DATA_PAGE, detailedPane );
+    }
+    
+    @FXML
+    void importData(ActionEvent event) {
+    	title.setText("IMPORT DATA");
+    	FXMLUtility.loadFxmlOnStackPane(AllPaths.IMPORT_DATA_PAGE, detailedPane );
     }
 }

@@ -74,7 +74,7 @@
       <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <VBox GridPane.columnIndex="2" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="id" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="id" disable="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
       </VBox>
 	</children>

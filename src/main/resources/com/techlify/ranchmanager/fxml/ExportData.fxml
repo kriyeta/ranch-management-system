@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="viewBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.ExportDataController">
+   <children>
+      <VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Please select location to save  h2db.h2.db file. Keep its backup incase you want to import this data." />
+            <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#exportData" text="EXPORT DATA" />
+            <Label fx:id="errorLabel" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

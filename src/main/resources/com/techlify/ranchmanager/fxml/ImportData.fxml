@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="viewBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.ImportDataController">
+	<children>
+		<VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Please select exported &quot;h2db.h2.db&quot; file and Restart application" />
+            <HBox spacing="3.0">
+               <children>
+                  <TextField fx:id="importDataFilePath" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="browseButton" mnemonicParsing="false" onAction="#browsePhoto" text="Browse" />
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" onAction="#importData" text="IMPORT DATA" />
+            <Label fx:id="errorLabel" />
+         </children>
+		</VBox>
+	</children>
+</AnchorPane>

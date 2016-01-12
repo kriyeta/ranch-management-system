@@ -65,6 +65,20 @@ public class HibernateUtil {
 	}
 	
 	/**
+	 * @param object
+	 */
+	public static Object getObjectFromDatabase(Class c, Long id) {
+		try{
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			return session.get(c, id);
+		} catch (Exception e){
+			return null;
+		}
+		
+	}
+	
+	/**
 	 * @return
 	 */
 	public static Session getSession() {

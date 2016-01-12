@@ -7,12 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * @author kamal
  *
  */
 @Entity
 @Table(name="PHOTO")
+@DynamicUpdate(value=true)
 public class Photo {
  
     @Id

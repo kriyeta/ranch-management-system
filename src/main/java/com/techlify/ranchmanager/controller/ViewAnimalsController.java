@@ -64,7 +64,7 @@ import com.techlify.ranchmanager.util.PrintLog;
 public class ViewAnimalsController implements Initializable {
 
 	@FXML
-	private TableView<Animal> animalsTable;
+	public TableView<Animal> animalsTable;
 
 	@FXML
 	private TableColumn dateOfBirth;
@@ -88,9 +88,9 @@ public class ViewAnimalsController implements Initializable {
 	private TableColumn type;
 
 	private static Stage editDialogBoxStage;
-	private ObservableList data;
+	public static ObservableList data;
 
-	private ObservableList<Animal> getInitialTableData() {
+	public static ObservableList<Animal> getInitialTableData() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
@@ -328,20 +328,40 @@ public class ViewAnimalsController implements Initializable {
 		gridPane.setVgap(2);
 		gridPane.add(new Text("ID"), 0, 0);
 		gridPane.add(new Text(":"), 1, 0);
-		gridPane.add(new Text(String.valueOf(currentAnimalId)), 2, 0);
+		try {
+			gridPane.add(new Text(String.valueOf(currentAnimalId)), 2, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		gridPane.add(new Text("ANIMAL #"), 0, 1);
 		gridPane.add(new Text(":"), 1, 1);
-		gridPane.add(new Text(String.valueOf(currentAnimalNumbers)), 2, 1);
+		try {
+			gridPane.add(new Text(String.valueOf(currentAnimalNumbers)), 2, 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		gridPane.add(new Text("DATE OF BIRTH"), 0, 2);
 		gridPane.add(new Text(":"), 1, 2);
-		gridPane.add(new Text(DateUtils.asLocalDate(currentAnimalDateOfBirth)
-				.toString()), 2, 2);
+		try {
+			gridPane.add(new Text(DateUtils.asLocalDate(currentAnimalDateOfBirth)
+					.toString()), 2, 2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		gridPane.add(new Text("GENDER"), 0, 3);
 		gridPane.add(new Text(":"), 1, 3);
-		gridPane.add(new Text(currentAnimalGender), 2, 3);
+		try {
+			gridPane.add(new Text(currentAnimalGender), 2, 3);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		gridPane.add(new Text("TYPE"), 0, 4);
 		gridPane.add(new Text(":"), 1, 4);
-		gridPane.add(new Text(currentAnimalTypeId.getName()), 2, 4);
+		try {
+			gridPane.add(new Text(currentAnimalTypeId.getName()), 2, 4);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (currentMaleParent != null) {
 			gridPane.add(new Text("MALE PARENT"), 0, 5);
 			gridPane.add(new Text(":"), 1, 5);

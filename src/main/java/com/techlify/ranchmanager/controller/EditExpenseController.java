@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
+import com.techlify.ranchmanager.common.AllControllers;
 import com.techlify.ranchmanager.common.Messages;
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.util.DateUtils;
@@ -74,12 +75,9 @@ public class EditExpenseController implements Initializable {
 
 	static boolean isFilled = false;
 	static Expense currentExpense	=	null;
-	@FXML
-	private void initialize() {
-		isFilled	=	false;
-	}
 
 	public void initialize(URL location, ResourceBundle resources) {
+		isFilled	=	false;
 		id.setText(currentExpense.getId().toString());
 		id.setDisable(true);
 		amount.setText(currentExpense.getAmount().toString());
@@ -150,6 +148,11 @@ public class EditExpenseController implements Initializable {
 			errorLabel.setWrapText(true);
 			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
 			errorLabel.setText("Ooops something went wrong, please try again.");
+		} finally {
+			ViewExpensesController.data = ViewExpensesController
+					.getInitialTableData();
+			AllControllers.viewExpensesController.expensesTable
+					.setItems(ViewExpensesController.data);
 		}
 
 	}
