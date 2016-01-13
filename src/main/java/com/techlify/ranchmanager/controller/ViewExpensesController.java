@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.dao.Expense;
@@ -86,7 +87,7 @@ public class ViewExpensesController implements Initializable {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<Expense> resultList = session.createCriteria(Expense.class).list();
+		List<Expense> resultList = session.createCriteria(Expense.class).addOrder(Order.desc("id")).setMaxResults(1000).list();
 
 		ObservableList<Expense> expensesListData = FXCollections
 				.observableList(resultList);

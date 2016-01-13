@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -9,19 +10,25 @@
 	<children>
 		<VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<Label text="Enter text bellow to filter:">
+				<Label text="Select criteria to filter:">
 					<font>
 						<Font name="System Bold" size="16.0" />
 					</font>
 				</Label>
-				<TextField fx:id="filterText" maxWidth="1.7976931348623157E308" VBox.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="searchPane">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" top="5.0" />
+               </padding></AnchorPane>
 				<TableView fx:id="animalsTable" VBox.vgrow="SOMETIMES">
 					<columns>
-						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="ID" />
-						<TableColumn fx:id="numbers" maxWidth="1.7976931348623157E308" minWidth="90.0" prefWidth="-1.0" text="ANIMAL #" />
-						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="TYPE" />
-						<TableColumn fx:id="dateOfBirth" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" text="DATE OF BIRTH" />
-						<TableColumn fx:id="gender" maxWidth="1.7976931348623157E308" minWidth="90.0" prefWidth="-1.0" text="GENDER" />
+						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="ID" />
+						<TableColumn fx:id="numbers" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="ANIMAL #" />
+						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="TYPE" />
+						<TableColumn fx:id="dateOfBirth" maxWidth="1.7976931348623157E308" minWidth="175.0" prefWidth="-1.0" text="DATE OF BIRTH" />
+						<TableColumn fx:id="gender" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="GENDER" />
 					</columns>
 				</TableView>
 			</children>

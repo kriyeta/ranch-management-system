@@ -33,6 +33,7 @@ import com.techlify.ranchmanager.dao.AnimalType;
 import com.techlify.ranchmanager.dao.Photo;
 import com.techlify.ranchmanager.util.DateUtils;
 import com.techlify.ranchmanager.util.FXMLUtility;
+import com.techlify.ranchmanager.util.FormUtil;
 import com.techlify.ranchmanager.util.HibernateUtil;
 import com.techlify.ranchmanager.util.PrintLog;
 
@@ -323,18 +324,7 @@ public class AddAnimalController {
 	@FXML
 	public void clearForm(ActionEvent event) {
 		PrintLog.printLog("Clearing form");
-		for (Node node : createUserForm.getChildren()) {
-			if (node instanceof VBox) {
-				PrintLog.printLog(node);
-				for (Node node1 : ((VBox) node).getChildren()) {
-					PrintLog.printLog(node1);
-					if (node1 instanceof TextField) {
-						PrintLog.printLog(node1);
-						((TextField) node1).clear();
-					}
-				}
-			}
-		}
+		FormUtil.clearNode(createUserForm);
 	}
 
 	/*

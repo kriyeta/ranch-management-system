@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.techlify</groupId>
 	<artifactId>ranchmanager</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 
 	<build>
 		<plugins>
@@ -19,10 +19,18 @@
 						</manifest>
 					</archive>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>javafx</groupId>

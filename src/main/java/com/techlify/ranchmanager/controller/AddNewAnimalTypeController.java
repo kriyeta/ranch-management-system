@@ -2,11 +2,6 @@ package com.techlify.ranchmanager.controller;
 
 import java.io.Serializable;
 
-import org.hibernate.Session;
-
-import com.techlify.ranchmanager.dao.AnimalType;
-import com.techlify.ranchmanager.util.HibernateUtil;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +10,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import org.hibernate.Session;
+
+import com.techlify.ranchmanager.dao.AnimalType;
+import com.techlify.ranchmanager.util.HibernateUtil;
 
 /**
  * @author kamal

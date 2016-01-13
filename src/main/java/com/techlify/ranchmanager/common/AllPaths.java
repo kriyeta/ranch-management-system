@@ -22,6 +22,8 @@ public class AllPaths {
 	public static final String VIEW_ANIMALS_MATING_PAGE	=	BASE_PATH+"ViewAnimalsMating.fxml"; 
 	public static final String IMPORT_DATA_PAGE	=	BASE_PATH+"ImportData.fxml"; 
 	public static final String EXPORT_DATA_PAGE	=	BASE_PATH+"ExportData.fxml"; 
+	public static final String SEARCH_ANIMALS_PAGE	=	BASE_PATH+"SearchAnimals.fxml"; 
+	public static final String SEARCH_ANIMALS_MATING_PAGE	=	BASE_PATH+"SearchAnimalsMating.fxml"; 
 	
 	/*
 	 * all stylesheet paths

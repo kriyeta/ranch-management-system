@@ -66,7 +66,6 @@
          </children>
 		</VBox>
 		<Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitForm" text="SUBMIT" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-		<Button fx:id="resetButton" mnemonicParsing="false" onAction="#clearForm" text="RESET" GridPane.rowIndex="7" />
 		<Label layoutX="20.0" layoutY="87.0" text="Date of Birth" GridPane.rowIndex="4" />
 		<Label layoutX="169.0" layoutY="247.0" text=":" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 		<Label fx:id="errorLabel" GridPane.columnSpan="2147483647" />

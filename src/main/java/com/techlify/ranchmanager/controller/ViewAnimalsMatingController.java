@@ -30,10 +30,13 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalsMating;
+import com.techlify.ranchmanager.util.FXMLUtility;
 import com.techlify.ranchmanager.util.HibernateUtil;
 
 /**
@@ -45,15 +48,15 @@ public class ViewAnimalsMatingController implements Initializable {
 
 	@FXML
 	private AnchorPane viewBox;
+	
+	@FXML
+    private AnchorPane searchPane;
 
 	@FXML
 	private VBox filterBox;
 
 	@FXML
 	private TableColumn endDate;
-
-	@FXML
-	private TextField filterText;
 
 	@FXML
 	private TableColumn id;
@@ -68,11 +71,12 @@ public class ViewAnimalsMatingController implements Initializable {
 	private TableColumn startDate;
 
 	@FXML
-	private TableView<AnimalsMating> animalsMatingTable;
+	public TableView<AnimalsMating> animalsMatingTable;
 
-	private ObservableList data;
+	public static ObservableList data;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		FXMLUtility.loadFxmlOnAnchorPane(AllPaths.SEARCH_ANIMALS_MATING_PAGE, searchPane);
 		id.setCellValueFactory(new PropertyValueFactory<AnimalsMating, Long>(
 				"id"));
 
@@ -204,66 +208,14 @@ public class ViewAnimalsMatingController implements Initializable {
 		data = getInitialTableData();
 		animalsMatingTable.setItems(data);
 
-		// adding filter listener to filter text field
-		filterText.textProperty().addListener(new InvalidationListener() {
-
-			public void invalidated(Observable o) {
-
-				if (filterText.textProperty().get().isEmpty()) {
-
-					animalsMatingTable.setItems(data);
-
-					return;
-
-				}
-
-				ObservableList<AnimalsMating> tableItems = FXCollections
-						.observableArrayList();
-
-				ObservableList<TableColumn<AnimalsMating, ?>> cols = animalsMatingTable
-						.getColumns();
-
-				for (int i = 0; i < data.size(); i++) {
-
-					for (int j = 0; j < cols.size(); j++) {
-
-						TableColumn col = cols.get(j);
-
-						String cellValue = null;
-						try {
-							cellValue = col.getCellData(data.get(i)).toString();
-						} catch (Exception e) {
-						}
-						if (cellValue != null) {
-							cellValue = cellValue.toLowerCase();
-
-							if (cellValue.contains(filterText.textProperty()
-									.get().toLowerCase())) {
-
-								tableItems.add((AnimalsMating) data.get(i));
-
-								break;
-
-							}
-						}
-
-					}
-
-				}
-
-				animalsMatingTable.setItems(tableItems);
-
-			}
-
-		});
 	}
 
-	private ObservableList<AnimalsMating> getInitialTableData() {
+	public static ObservableList<AnimalsMating> getInitialTableData() {
 
 		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
 		List<AnimalsMating> resultList = session.createCriteria(
-				AnimalsMating.class).list();
+				AnimalsMating.class).addOrder(Order.desc("id")).setMaxResults(1000).list();
 
 		ObservableList<AnimalsMating> animalsListData = FXCollections
 				.observableList(resultList);

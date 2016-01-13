@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -29,7 +27,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +42,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
 import com.techlify.ranchmanager.common.AllPaths;
 import com.techlify.ranchmanager.dao.Animal;
@@ -73,14 +71,14 @@ public class ViewAnimalsController implements Initializable {
 	private VBox filterBox;
 
 	@FXML
-	private TextField filterText;
-
-	@FXML
 	private TableColumn gender;
 
 	@FXML
 	private TableColumn id;
-
+	
+	@FXML
+    private AnchorPane searchPane;
+	
 	@FXML
 	private TableColumn numbers;
 
@@ -94,7 +92,7 @@ public class ViewAnimalsController implements Initializable {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<Animal> resultList = session.createCriteria(Animal.class).list();
+		List<Animal> resultList = session.createCriteria(Animal.class).addOrder(Order.desc("id")).setMaxResults(1000).list();
 
 		ObservableList<Animal> animalsListData = FXCollections
 				.observableList(resultList);
@@ -110,6 +108,7 @@ public class ViewAnimalsController implements Initializable {
 	 */
 
 	public void initialize(URL location, ResourceBundle resources) {
+		FXMLUtility.loadFxmlOnAnchorPane(AllPaths.SEARCH_ANIMALS_PAGE, searchPane);
 		id.setCellValueFactory(new PropertyValueFactory<Animal, Long>("id"));
 		numbers.setCellValueFactory(new PropertyValueFactory<Animal, Long>(
 				"numbers"));
@@ -171,59 +170,6 @@ public class ViewAnimalsController implements Initializable {
 
 		data = getInitialTableData();
 		animalsTable.setItems(data);
-
-		// adding filter listener to filter text field
-		filterText.textProperty().addListener(new InvalidationListener() {
-
-			public void invalidated(Observable o) {
-
-				if (filterText.textProperty().get().isEmpty()) {
-
-					animalsTable.setItems(data);
-
-					return;
-
-				}
-
-				ObservableList<Animal> tableItems = FXCollections
-						.observableArrayList();
-
-				ObservableList<TableColumn<Animal, ?>> cols = animalsTable
-						.getColumns();
-
-				for (int i = 0; i < data.size(); i++) {
-
-					for (int j = 0; j < cols.size(); j++) {
-
-						TableColumn col = cols.get(j);
-
-						String cellValue = null;
-						try {
-							cellValue = col.getCellData(data.get(i)).toString();
-						} catch (Exception e) {
-						}
-						if (cellValue != null) {
-							cellValue = cellValue.toLowerCase();
-
-							if (cellValue.contains(filterText.textProperty()
-									.get().toLowerCase())) {
-
-								tableItems.add((Animal) data.get(i));
-
-								break;
-
-							}
-						}
-
-					}
-
-				}
-
-				animalsTable.setItems(tableItems);
-
-			}
-
-		});
 	}
 
 	// Define the button cell

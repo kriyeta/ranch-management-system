@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="searchPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.SearchAnimalsController">
+	<children>
+		<VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox spacing="3.0">
+               <children>
+                  <TextField fx:id="animalNumber" nodeOrientation="LEFT_TO_RIGHT" promptText="Enter animal number" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="animalType" onMouseClicked="#fillAnimalTypes" prefWidth="150.0" promptText="Select Type" />
+                  <ComboBox fx:id="gender" prefWidth="150.0" promptText="Select Gender" />
+                  <DatePicker fx:id="animalsDob" promptText="Select DOB" />
+                  <Button fx:id="searchAnimals" minWidth="120.0" mnemonicParsing="false" onAction="#searchAnimals" prefWidth="120.0" text="Filer Animals" />
+                  <Button fx:id="clearFilter" layoutX="651.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#clearFilter" prefWidth="90.0" text="Clear" />
+               </children>
+            </HBox>
+         </children>
+		</VBox>
+	</children>
+</AnchorPane>

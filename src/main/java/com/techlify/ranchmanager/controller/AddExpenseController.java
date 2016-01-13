@@ -22,6 +22,7 @@ import org.hibernate.criterion.Projections;
 
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.util.DateUtils;
+import com.techlify.ranchmanager.util.FormUtil;
 import com.techlify.ranchmanager.util.HibernateUtil;
 import com.techlify.ranchmanager.util.PrintLog;
 
@@ -139,7 +140,8 @@ public class AddExpenseController {
 
 	@FXML
 	void clearForm(ActionEvent event) {
-
+		PrintLog.printLog("Clearing form");
+		FormUtil.clearNode(formGrid);
 	}
 
 	/*

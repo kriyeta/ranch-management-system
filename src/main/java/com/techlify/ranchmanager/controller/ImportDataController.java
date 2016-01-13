@@ -2,7 +2,6 @@ package com.techlify.ranchmanager.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
@@ -14,8 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-
-import org.apache.log4j.chainsaw.Main;
 
 import com.techlify.ranchmanager.util.PrintLog;
 

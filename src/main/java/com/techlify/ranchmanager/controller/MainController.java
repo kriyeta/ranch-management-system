@@ -92,7 +92,7 @@ public class MainController {
     @FXML
     void viewAnimalsMating(ActionEvent event) {
     	title.setText("All Animals Mating");
-    	FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMALS_MATING_PAGE, detailedPane );
+    	AllControllers.viewAnimalsMatingController	=	(ViewAnimalsMatingController) FXMLUtility.loadFxmlOnStackPane(AllPaths.VIEW_ANIMALS_MATING_PAGE, detailedPane );
     }
     
     @FXML

@@ -7,15 +7,12 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -27,6 +24,7 @@ import com.techlify.ranchmanager.dao.Animal;
 import com.techlify.ranchmanager.dao.AnimalType;
 import com.techlify.ranchmanager.dao.AnimalsMating;
 import com.techlify.ranchmanager.util.DateUtils;
+import com.techlify.ranchmanager.util.FormUtil;
 import com.techlify.ranchmanager.util.HibernateUtil;
 import com.techlify.ranchmanager.util.PrintLog;
 
@@ -204,18 +202,7 @@ public class AddAnimalsMatingController {
 	@FXML
 	public void clearForm(ActionEvent event) {
 		PrintLog.printLog("Clearing form");
-		for (Node node : createUserForm.getChildren()) {
-			if (node instanceof VBox) {
-				PrintLog.printLog(node);
-				for (Node node1 : ((VBox) node).getChildren()) {
-					PrintLog.printLog(node1);
-					if (node1 instanceof TextField) {
-						PrintLog.printLog(node1);
-						((TextField) node1).clear();
-					}
-				}
-			}
-		}
+		FormUtil.clearNode(createUserForm);
 	}
 	
 	/*

@@ -27,6 +27,7 @@ import com.techlify.ranchmanager.common.AllControllers;
 import com.techlify.ranchmanager.common.Messages;
 import com.techlify.ranchmanager.dao.Expense;
 import com.techlify.ranchmanager.util.DateUtils;
+import com.techlify.ranchmanager.util.FormUtil;
 import com.techlify.ranchmanager.util.HibernateUtil;
 import com.techlify.ranchmanager.util.PrintLog;
 
@@ -159,7 +160,8 @@ public class EditExpenseController implements Initializable {
 
 	@FXML
 	void clearForm(ActionEvent event) {
-
+		PrintLog.printLog("Clearing form");
+		FormUtil.clearNode(formGrid);
 	}
 
 	/*

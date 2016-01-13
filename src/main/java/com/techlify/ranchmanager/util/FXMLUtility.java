@@ -69,6 +69,29 @@ public class FXMLUtility {
 	 * @param stage
 	 * @return 
 	 * @return 
+	 * @return 
+	 */
+	public static  Object loadFxmlOnAnchorPane(String fxmlResourcePath, AnchorPane anchorPane) {
+		URL location=FXMLUtility.class.getResource(fxmlResourcePath);
+		System.out.println(location);
+		FXMLLoader fxmlLoader=new FXMLLoader(location);
+		Node root = null;
+		try {
+			root=fxmlLoader.load();
+		}
+		catch (  IOException e) {
+			e.printStackTrace();
+		}
+		anchorPane.getChildren().clear();
+		anchorPane.getChildren().add(root);
+		return fxmlLoader.getController();
+	}
+	
+	/**
+	 * @param fxmlResourcePath
+	 * @param stage
+	 * @return 
+	 * @return 
 	 */
 	public static Node loadFxmlOnComponent(String fxmlResourcePath) {
 		URL location=FXMLUtility.class.getResource(fxmlResourcePath);
