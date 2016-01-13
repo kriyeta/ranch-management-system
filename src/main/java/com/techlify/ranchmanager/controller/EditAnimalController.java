@@ -201,6 +201,10 @@ public class EditAnimalController {
 					}
 				}
 				List<Photo> photos = animalFromDb.getPhotos();
+				Animal maleParent = animalFromDb.getMaleParent();
+				animal.setMaleParent(maleParent);
+				Animal femaleParent = animalFromDb.getFemaleParent();
+				animal.setFemaleParent(femaleParent);
 				allPhotos.addAll(photos);
 				animal.setPhotos(allPhotos);
 

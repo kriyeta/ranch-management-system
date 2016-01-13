@@ -53,58 +53,33 @@ public class AddAnimalsMatingController {
 	private GridPane createUserForm;
 
 	@FXML
-	private ComboBox<AnimalType> maleParentType;
+	private ComboBox<AnimalType> parentType;
 
 	@FXML
 	private ComboBox<Animal> maleParent;
 
 	@FXML
-	private ComboBox<AnimalType> femaleParentType;
-
-	@FXML
 	private ComboBox<Animal> femaleParent;
 
-	private static boolean isMaleParentTypeFilled = false;
-	private static boolean isFemaleParentTypeFilled = false;
+	private static boolean isParentTypeFilled = false;
 
 	@FXML
 	private void initialize() {
-		isMaleParentTypeFilled = false;
-		isFemaleParentTypeFilled = false;
+		isParentTypeFilled = false;
 
 		// adding convertor for type combobox
 		maleParent.setConverter(new AnimalConvertor());
 
 		// adding convertor for type combobox
-		maleParentType.setConverter(new AnimalTypeConvertor());
-
-		maleParentType.setOnAction((event) -> {
-			AnimalType selectedAnimalType = maleParentType.getSelectionModel()
-					.getSelectedItem();
-			PrintLog.printLog("ComboBox Action (selected: "
-					+ selectedAnimalType.toString() + ")");
-			Session session = HibernateUtil.getSession();
-			session.beginTransaction();
-			List<Animal> resultList = session.createCriteria(Animal.class)
-					.add(Restrictions.eq("typeId", selectedAnimalType))
-					.add(Restrictions.eq("gender", "Male")).list();
-			PrintLog.printLog("num of animal types:" + resultList.size());
-			ArrayList<Animal> selectedTypeAnimals = new ArrayList<Animal>();
-			for (Animal next : resultList) {
-				selectedTypeAnimals.add(next);
-			}
-			maleParent.setItems(FXCollections
-					.observableArrayList(selectedTypeAnimals));
-		});
+		parentType.setConverter(new AnimalTypeConvertor());
 
 		// adding convertor for type combobox
 		femaleParent.setConverter(new AnimalConvertor());
 
-		// adding convertor for type combobox
-		femaleParentType.setConverter(new AnimalTypeConvertor());
+		
 
-		femaleParentType.setOnAction((event) -> {
-			AnimalType selectedAnimalType = femaleParentType
+		parentType.setOnAction((event) -> {
+			AnimalType selectedAnimalType = parentType
 					.getSelectionModel().getSelectedItem();
 			PrintLog.printLog("ComboBox Action (selected: "
 					+ selectedAnimalType.toString() + ")");
@@ -120,31 +95,29 @@ public class AddAnimalsMatingController {
 			}
 			femaleParent.setItems(FXCollections
 					.observableArrayList(selectedTypeAnimals));
+			session.getTransaction().commit();
+			
+			PrintLog.printLog("ComboBox Action (selected: "
+					+ selectedAnimalType.toString() + ")");
+			session.beginTransaction();
+			List<Animal> resultList1 = session.createCriteria(Animal.class)
+					.add(Restrictions.eq("typeId", selectedAnimalType))
+					.add(Restrictions.eq("gender", "Male")).list();
+			PrintLog.printLog("num of animal types:" + resultList1.size());
+			ArrayList<Animal> selectedTypeAnimals1 = new ArrayList<Animal>();
+			for (Animal next : resultList1) {
+				selectedTypeAnimals1.add(next);
+			}
+			maleParent.setItems(FXCollections
+					.observableArrayList(selectedTypeAnimals1));
 		});
 
 	}
 
-	@FXML
-	void fillFemaleParentTypes(MouseEvent event) {
-		if (!isFemaleParentTypeFilled) {
-			Session session = HibernateUtil.getSession();
-			session.beginTransaction();
-			List<AnimalType> resultList = session.createCriteria(
-					AnimalType.class).list();
-			PrintLog.printLog("num of animal types:" + resultList.size());
-			ArrayList<AnimalType> allTypes = new ArrayList<AnimalType>();
-			for (AnimalType next : resultList) {
-				allTypes.add(next);
-			}
-			femaleParentType.setItems(FXCollections
-					.observableArrayList(allTypes));
-			isFemaleParentTypeFilled = true;
-		}
-	}
 
 	@FXML
-	void fillMaleParentTypes(MouseEvent event) {
-		if (!isMaleParentTypeFilled) {
+	void fillParentTypes(MouseEvent event) {
+		if (!isParentTypeFilled) {
 			Session session = HibernateUtil.getSession();
 			session.beginTransaction();
 			List<AnimalType> resultList = session.createCriteria(
@@ -154,9 +127,9 @@ public class AddAnimalsMatingController {
 			for (AnimalType next : resultList) {
 				allTypes.add(next);
 			}
-			maleParentType
+			parentType
 					.setItems(FXCollections.observableArrayList(allTypes));
-			isMaleParentTypeFilled = true;
+			isParentTypeFilled = true;
 		}
 	}
 

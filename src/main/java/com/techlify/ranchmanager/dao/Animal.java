@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 /**
  * @author kamal
@@ -25,6 +26,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Entity
 @Table(name = "ANIMAL")
 @DynamicUpdate(value=true)
+@SelectBeforeUpdate(value=true)
 public class Animal {
 
 	@Id

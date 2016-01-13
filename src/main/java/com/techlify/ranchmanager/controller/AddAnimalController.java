@@ -68,13 +68,7 @@ public class AddAnimalController {
 	private ComboBox<AnimalType> type;
 
 	@FXML
-	private ComboBox<AnimalType> maleParentType;
-
-	@FXML
 	private ComboBox<Animal> maleParent;
-
-	@FXML
-	private ComboBox<AnimalType> femaleParentType;
 
 	@FXML
 	private ComboBox<Animal> femaleParent;
@@ -106,7 +100,6 @@ public class AddAnimalController {
 		isFilled = false;
 		isMaleParentTypeFilled = false;
 		isFemaleParentTypeFilled = false;
-
 		// adding convertor for type combobox
 		type.setConverter(new AnimalTypeConvertor());
 
@@ -114,10 +107,11 @@ public class AddAnimalController {
 		maleParent.setConverter(new AnimalConvertor());
 
 		// adding convertor for type combobox
-		maleParentType.setConverter(new AnimalTypeConvertor());
+		femaleParent.setConverter(new AnimalConvertor());
 
-		maleParentType.setOnAction((event) -> {
-			AnimalType selectedAnimalType = maleParentType.getSelectionModel()
+		type.setOnAction((event) -> {
+			
+			AnimalType selectedAnimalType = type.getSelectionModel()
 					.getSelectedItem();
 			PrintLog.printLog("ComboBox Action (selected: "
 					+ selectedAnimalType.toString() + ")");
@@ -133,31 +127,23 @@ public class AddAnimalController {
 			}
 			maleParent.setItems(FXCollections
 					.observableArrayList(selectedTypeAnimals));
-		});
-
-		// adding convertor for type combobox
-		femaleParent.setConverter(new AnimalConvertor());
-
-		// adding convertor for type combobox
-		femaleParentType.setConverter(new AnimalTypeConvertor());
-
-		femaleParentType.setOnAction((event) -> {
-			AnimalType selectedAnimalType = femaleParentType
-					.getSelectionModel().getSelectedItem();
+			
 			PrintLog.printLog("ComboBox Action (selected: "
 					+ selectedAnimalType.toString() + ")");
-			Session session = HibernateUtil.getSession();
+			session.getTransaction().commit();
+			
 			session.beginTransaction();
-			List<Animal> resultList = session.createCriteria(Animal.class)
+			List<Animal> resultList1 = session.createCriteria(Animal.class)
 					.add(Restrictions.eq("typeId", selectedAnimalType))
 					.add(Restrictions.eq("gender", "Female")).list();
-			PrintLog.printLog("num of animal types:" + resultList.size());
-			ArrayList<Animal> selectedTypeAnimals = new ArrayList<Animal>();
-			for (Animal next : resultList) {
-				selectedTypeAnimals.add(next);
+			PrintLog.printLog("num of animal types:" + resultList1.size());
+			ArrayList<Animal> selectedTypeAnimals1 = new ArrayList<Animal>();
+			for (Animal next : resultList1) {
+				selectedTypeAnimals1.add(next);
 			}
 			femaleParent.setItems(FXCollections
-					.observableArrayList(selectedTypeAnimals));
+					.observableArrayList(selectedTypeAnimals1));
+			session.getTransaction().commit();
 		});
 
 		// adding one browse button initially
@@ -181,41 +167,6 @@ public class AddAnimalController {
 		typeVBox.getChildren().add(0, loadFxmlOnComponent);
 	}
 
-	@FXML
-	void fillFemaleParentTypes(MouseEvent event) {
-		if (!isFemaleParentTypeFilled) {
-			Session session = HibernateUtil.getSession();
-			session.beginTransaction();
-			List<AnimalType> resultList = session.createCriteria(
-					AnimalType.class).list();
-			PrintLog.printLog("num of animal types:" + resultList.size());
-			ArrayList<AnimalType> allTypes = new ArrayList<AnimalType>();
-			for (AnimalType next : resultList) {
-				allTypes.add(next);
-			}
-			femaleParentType.setItems(FXCollections
-					.observableArrayList(allTypes));
-			isFemaleParentTypeFilled = true;
-		}
-	}
-
-	@FXML
-	void fillMaleParentTypes(MouseEvent event) {
-		if (!isMaleParentTypeFilled) {
-			Session session = HibernateUtil.getSession();
-			session.beginTransaction();
-			List<AnimalType> resultList = session.createCriteria(
-					AnimalType.class).list();
-			PrintLog.printLog("num of animal types:" + resultList.size());
-			ArrayList<AnimalType> allTypes = new ArrayList<AnimalType>();
-			for (AnimalType next : resultList) {
-				allTypes.add(next);
-			}
-			maleParentType
-					.setItems(FXCollections.observableArrayList(allTypes));
-			isMaleParentTypeFilled = true;
-		}
-	}
 
 	@FXML
 	void addMorePhotos(ActionEvent event) {
