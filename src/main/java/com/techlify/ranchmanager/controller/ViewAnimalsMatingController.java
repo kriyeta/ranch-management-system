@@ -235,7 +235,6 @@ public class ViewAnimalsMatingController implements Initializable {
 		});
 
 		data = getInitialTableData();
-		animalsMatingTable.setItems(data);
 
 		// Adding pagination
 		Pagination pagination = new Pagination(

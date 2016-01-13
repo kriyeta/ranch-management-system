@@ -168,7 +168,6 @@ public class ViewExpensesController implements Initializable {
 		expensesTable.getColumns().add(col_action);
 
 		data = getInitialTableData();
-		expensesTable.setItems(data);
 
 		// Adding pagination
 		Pagination pagination = new Pagination(

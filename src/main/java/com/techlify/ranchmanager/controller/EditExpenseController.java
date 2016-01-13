@@ -135,7 +135,6 @@ public class EditExpenseController implements Initializable {
 						.updateObjectToDatabase(expense);
 				if (addObjectToDatabase == true) {
 					errorLabel.setText("Expense is updated successfully");
-					clearForm(null);
 				} else {
 					errorLabel.setWrapText(true);
 					errorLabel

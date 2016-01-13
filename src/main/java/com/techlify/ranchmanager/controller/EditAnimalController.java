@@ -212,7 +212,6 @@ public class EditAnimalController {
 						.updateObjectToDatabase(animal);
 				if (addObjectToDatabase == true) {
 					errorLabel.setText("Animal is added successfully");
-					clearForm(null);
 				} else {
 					errorLabel.setWrapText(true);
 					errorLabel

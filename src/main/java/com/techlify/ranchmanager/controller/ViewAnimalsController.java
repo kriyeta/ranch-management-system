@@ -172,7 +172,6 @@ public class ViewAnimalsController implements Initializable {
 		animalsTable.getColumns().add(col_action);
 
 		data = getInitialTableData();
-		animalsTable.setItems(data);
 		
 		// Adding pagination
 		Pagination pagination = new Pagination((data.size() / ANIMALS_PER_PAGE + 1), 0);
