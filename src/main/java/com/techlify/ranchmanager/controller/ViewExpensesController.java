@@ -67,9 +67,6 @@ public class ViewExpensesController implements Initializable {
 	private TableColumn details;
 
 	@FXML
-	private TextField filterText;
-
-	@FXML
 	private TableColumn id;
 
 	@FXML
@@ -77,6 +74,9 @@ public class ViewExpensesController implements Initializable {
 
 	@FXML
 	public TableView<Expense> expensesTable;
+	
+	@FXML
+    private AnchorPane searchPane;
 
 	@FXML
 	private TableColumn dateAdded;
@@ -100,6 +100,7 @@ public class ViewExpensesController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
+		FXMLUtility.loadFxmlOnAnchorPane(AllPaths.SEARCH_EXPENSE_PAGE, searchPane);
 		id.setCellValueFactory(new PropertyValueFactory<Expense, Long>("id"));
 		amount.setCellValueFactory(new PropertyValueFactory<Expense, Long>(
 				"amount"));
@@ -168,59 +169,6 @@ public class ViewExpensesController implements Initializable {
 
 		data = getInitialTableData();
 		expensesTable.setItems(data);
-
-		// adding filter listener to filter text field
-		filterText.textProperty().addListener(new InvalidationListener() {
-
-			public void invalidated(Observable o) {
-
-				if (filterText.textProperty().get().isEmpty()) {
-
-					expensesTable.setItems(data);
-
-					return;
-
-				}
-
-				ObservableList<Expense> tableItems = FXCollections
-						.observableArrayList();
-
-				ObservableList<TableColumn<Expense, ?>> cols = expensesTable
-						.getColumns();
-
-				for (int i = 0; i < data.size(); i++) {
-
-					for (int j = 0; j < cols.size(); j++) {
-
-						TableColumn col = cols.get(j);
-
-						String cellValue = null;
-						try {
-							cellValue = col.getCellData(data.get(i)).toString();
-						} catch (Exception e) {
-						}
-						if (cellValue != null) {
-							cellValue = cellValue.toLowerCase();
-
-							if (cellValue.contains(filterText.textProperty()
-									.get().toLowerCase())) {
-
-								tableItems.add((Expense) data.get(i));
-
-								break;
-
-							}
-						}
-
-					}
-
-				}
-
-				expensesTable.setItems(tableItems);
-
-			}
-
-		});
 
 		// Adding pagination
 		Pagination pagination = new Pagination(

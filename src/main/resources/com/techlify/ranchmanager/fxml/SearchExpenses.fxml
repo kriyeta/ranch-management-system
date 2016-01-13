@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="searchPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.techlify.ranchmanager.controller.SearchExpensesController">
+	<children>
+		<VBox fx:id="filterBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox spacing="3.0">
+               <children>
+                  <TextField fx:id="amount" nodeOrientation="LEFT_TO_RIGHT" promptText="Enter amount" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="expenseType" onMouseClicked="#fillExpenseTypes" prefWidth="150.0" promptText="Select Expense Type" />
+                  <VBox>
+                     <children>
+                        <DatePicker fx:id="startDate" promptText="Start date" />
+                        <DatePicker fx:id="endDate" layoutX="10.0" layoutY="10.0" promptText="End date" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="filterExpenses" minWidth="120.0" mnemonicParsing="false" onAction="#filterExpenses" prefWidth="120.0" text="Filer Expenses" />
+                  <Button fx:id="clearFilter" layoutX="651.0" layoutY="10.0" minWidth="90.0" mnemonicParsing="false" onAction="#clearFilter" prefWidth="90.0" text="Clear" />
+               </children>
+            </HBox>
+         </children>
+		</VBox>
+	</children>
+</AnchorPane>

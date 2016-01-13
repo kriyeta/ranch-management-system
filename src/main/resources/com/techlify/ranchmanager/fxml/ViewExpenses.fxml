@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -14,7 +15,14 @@
 						<Font name="System Bold" size="16.0" />
 					</font>
 				</Label>
-				<TextField fx:id="filterText" maxWidth="1.7976931348623157E308" VBox.vgrow="SOMETIMES" />
+            <AnchorPane fx:id="searchPane">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" top="5.0" />
+               </padding>
+            </AnchorPane>
 				<TableView fx:id="expensesTable" VBox.vgrow="SOMETIMES">
 					<columns>
 						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="75.0" prefWidth="-1.0" text="ID" />
