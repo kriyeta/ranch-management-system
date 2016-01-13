@@ -21,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableCell;
@@ -31,6 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -81,10 +83,11 @@ public class ViewAnimalsController implements Initializable {
 	
 	@FXML
 	private TableColumn numbers;
-
+	
 	@FXML
 	private TableColumn type;
 
+	int ANIMALS_PER_PAGE	=	15;
 	private static Stage editDialogBoxStage;
 	public static ObservableList data;
 
@@ -170,7 +173,22 @@ public class ViewAnimalsController implements Initializable {
 
 		data = getInitialTableData();
 		animalsTable.setItems(data);
+		
+		// Adding pagination
+		Pagination pagination = new Pagination((data.size() / ANIMALS_PER_PAGE + 1), 0);
+        pagination.setPageFactory(this::createPage);
+        filterBox.getChildren().remove(animalsTable);
+        filterBox.getChildren().add(new BorderPane(pagination));
 	}
+	
+	private Node createPage(int pageIndex) {
+
+        int fromIndex = pageIndex * ANIMALS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ANIMALS_PER_PAGE, data.size());
+        animalsTable.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return new BorderPane(animalsTable);
+    }
 
 	// Define the button cell
 	private class ButtonCell extends TableCell<Animal, Boolean> {

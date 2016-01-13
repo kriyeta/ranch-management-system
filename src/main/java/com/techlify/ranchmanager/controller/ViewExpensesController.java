@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -28,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -82,12 +84,14 @@ public class ViewExpensesController implements Initializable {
 	private Stage editDialogBoxStage;
 
 	public static ObservableList data;
+	int EXPENSES_PER_PAGE = 15;
 
 	public static ObservableList<Expense> getInitialTableData() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		List<Expense> resultList = session.createCriteria(Expense.class).addOrder(Order.desc("id")).setMaxResults(1000).list();
+		List<Expense> resultList = session.createCriteria(Expense.class)
+				.addOrder(Order.desc("id")).setMaxResults(1000).list();
 
 		ObservableList<Expense> expensesListData = FXCollections
 				.observableList(resultList);
@@ -217,7 +221,23 @@ public class ViewExpensesController implements Initializable {
 			}
 
 		});
+
+		// Adding pagination
+		Pagination pagination = new Pagination(
+				(data.size() / EXPENSES_PER_PAGE + 1), 0);
+		pagination.setPageFactory(this::createPage);
+		filterBox.getChildren().remove(expensesTable);
+		filterBox.getChildren().add(new BorderPane(pagination));
 	}
+	
+	private Node createPage(int pageIndex) {
+
+        int fromIndex = pageIndex *EXPENSES_PER_PAGE;
+        int toIndex = Math.min(fromIndex + EXPENSES_PER_PAGE, data.size());
+        expensesTable.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return new BorderPane(expensesTable);
+    }
 
 	private class ButtonCell extends TableCell<Expense, Boolean> {
 		final Button cellButton = new Button("Edit");

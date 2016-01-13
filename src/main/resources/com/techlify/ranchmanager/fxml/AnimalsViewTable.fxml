@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<TableView fx:id="animalsTable" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <columns>
+      <TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="ID" />
+      <TableColumn fx:id="numbers" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="ANIMAL #" />
+      <TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="TYPE" />
+      <TableColumn fx:id="dateOfBirth" maxWidth="1.7976931348623157E308" minWidth="175.0" prefWidth="-1.0" text="DATE OF BIRTH" />
+      <TableColumn fx:id="gender" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="GENDER" />
+   </columns>
+</TableView>

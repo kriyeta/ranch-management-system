@@ -22,15 +22,15 @@
                <padding>
                   <Insets bottom="10.0" top="5.0" />
                </padding></AnchorPane>
-				<TableView fx:id="animalsTable" VBox.vgrow="SOMETIMES">
-					<columns>
-						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="ID" />
-						<TableColumn fx:id="numbers" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="ANIMAL #" />
-						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="TYPE" />
-						<TableColumn fx:id="dateOfBirth" maxWidth="1.7976931348623157E308" minWidth="175.0" prefWidth="-1.0" text="DATE OF BIRTH" />
-						<TableColumn fx:id="gender" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="GENDER" />
-					</columns>
-				</TableView>
+      				<TableView fx:id="animalsTable" VBox.vgrow="SOMETIMES">
+      					<columns>
+      						<TableColumn fx:id="id" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="ID" />
+      						<TableColumn fx:id="numbers" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="ANIMAL #" />
+      						<TableColumn fx:id="type" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="TYPE" />
+      						<TableColumn fx:id="dateOfBirth" maxWidth="1.7976931348623157E308" minWidth="175.0" prefWidth="-1.0" text="DATE OF BIRTH" />
+      						<TableColumn fx:id="gender" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="GENDER" />
+      					</columns>
+      				</TableView>
 			</children>
 		</VBox>
 	</children>

@@ -17,7 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -48,9 +51,9 @@ public class ViewAnimalsMatingController implements Initializable {
 
 	@FXML
 	private AnchorPane viewBox;
-	
+
 	@FXML
-    private AnchorPane searchPane;
+	private AnchorPane searchPane;
 
 	@FXML
 	private VBox filterBox;
@@ -74,43 +77,57 @@ public class ViewAnimalsMatingController implements Initializable {
 	public TableView<AnimalsMating> animalsMatingTable;
 
 	public static ObservableList data;
+	int ANIMALS_MATING_PER_PAGE	=	15;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		FXMLUtility.loadFxmlOnAnchorPane(AllPaths.SEARCH_ANIMALS_MATING_PAGE, searchPane);
+		FXMLUtility.loadFxmlOnAnchorPane(AllPaths.SEARCH_ANIMALS_MATING_PAGE,
+				searchPane);
 		id.setCellValueFactory(new PropertyValueFactory<AnimalsMating, Long>(
 				"id"));
 
-		maleAnimal.setCellFactory(new Callback<TableColumn<AnimalsMating, String>, TableCell<AnimalsMating, String>>() {
-			@Override
-			public TableCell<AnimalsMating, String> call(
-					TableColumn<AnimalsMating, String> param) {
-				try {
-					TableCell<AnimalsMating, String> cell = new TableCell<>();
-					Hyperlink hyperlink	=	new Hyperlink();
-					hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-						
-						@Override
-						public void handle(ActionEvent event) {
-							Hyperlink currentHyperlink	=	(Hyperlink) event.getSource();
-							String animalNumber	=	currentHyperlink.getText();
-							Session session = HibernateUtil.getSession();
-							session.beginTransaction();
-							List<Animal> resultList = session.createCriteria(
-									Animal.class).add(Restrictions.eq("numbers", animalNumber)).list();
-							ViewAnimalsController.showDetailedView(resultList.get(0));
+		maleAnimal
+				.setCellFactory(new Callback<TableColumn<AnimalsMating, String>, TableCell<AnimalsMating, String>>() {
+					@Override
+					public TableCell<AnimalsMating, String> call(
+							TableColumn<AnimalsMating, String> param) {
+						try {
+							TableCell<AnimalsMating, String> cell = new TableCell<>();
+							Hyperlink hyperlink = new Hyperlink();
+							hyperlink
+									.setOnAction(new EventHandler<ActionEvent>() {
+
+										@Override
+										public void handle(ActionEvent event) {
+											Hyperlink currentHyperlink = (Hyperlink) event
+													.getSource();
+											String animalNumber = currentHyperlink
+													.getText();
+											Session session = HibernateUtil
+													.getSession();
+											session.beginTransaction();
+											List<Animal> resultList = session
+													.createCriteria(
+															Animal.class)
+													.add(Restrictions.eq(
+															"numbers",
+															animalNumber))
+													.list();
+											ViewAnimalsController
+													.showDetailedView(resultList
+															.get(0));
+										}
+									});
+							cell.setGraphic(hyperlink);
+							cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
+							hyperlink.textProperty().bind(cell.itemProperty());
+							return cell;
+						} catch (Exception e) {
+							e.printStackTrace();
+							return null;
 						}
-					});
-					cell.setGraphic(hyperlink);
-					cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
-					hyperlink.textProperty().bind(cell.itemProperty());
-					return cell;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		});
-		
+					}
+				});
+
 		maleAnimal
 				.setCellValueFactory(new Callback<CellDataFeatures<AnimalsMating, String>, ObservableValue<String>>() {
 					@Override
@@ -126,37 +143,49 @@ public class ViewAnimalsMatingController implements Initializable {
 						}
 					}
 				});
-		
-		femaleAnimal.setCellFactory(new Callback<TableColumn<AnimalsMating, String>, TableCell<AnimalsMating, String>>() {
-			@Override
-			public TableCell<AnimalsMating, String> call(
-					TableColumn<AnimalsMating, String> param) {
-				try {
-					TableCell<AnimalsMating, String> cell = new TableCell<>();
-					Hyperlink hyperlink	=	new Hyperlink();
-					hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-						
-						@Override
-						public void handle(ActionEvent event) {
-							Hyperlink currentHyperlink	=	(Hyperlink) event.getSource();
-							String animalNumber	=	currentHyperlink.getText();
-							Session session = HibernateUtil.getSession();
-							session.beginTransaction();
-							List<Animal> resultList = session.createCriteria(
-									Animal.class).add(Restrictions.eq("numbers", animalNumber)).list();
-							ViewAnimalsController.showDetailedView(resultList.get(0));
+
+		femaleAnimal
+				.setCellFactory(new Callback<TableColumn<AnimalsMating, String>, TableCell<AnimalsMating, String>>() {
+					@Override
+					public TableCell<AnimalsMating, String> call(
+							TableColumn<AnimalsMating, String> param) {
+						try {
+							TableCell<AnimalsMating, String> cell = new TableCell<>();
+							Hyperlink hyperlink = new Hyperlink();
+							hyperlink
+									.setOnAction(new EventHandler<ActionEvent>() {
+
+										@Override
+										public void handle(ActionEvent event) {
+											Hyperlink currentHyperlink = (Hyperlink) event
+													.getSource();
+											String animalNumber = currentHyperlink
+													.getText();
+											Session session = HibernateUtil
+													.getSession();
+											session.beginTransaction();
+											List<Animal> resultList = session
+													.createCriteria(
+															Animal.class)
+													.add(Restrictions.eq(
+															"numbers",
+															animalNumber))
+													.list();
+											ViewAnimalsController
+													.showDetailedView(resultList
+															.get(0));
+										}
+									});
+							cell.setGraphic(hyperlink);
+							cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
+							hyperlink.textProperty().bind(cell.itemProperty());
+							return cell;
+						} catch (Exception e) {
+							e.printStackTrace();
+							return null;
 						}
-					});
-					cell.setGraphic(hyperlink);
-					cell.setPrefHeight(Region.USE_COMPUTED_SIZE);
-					hyperlink.textProperty().bind(cell.itemProperty());
-					return cell;
-				} catch (Exception e) {
-					e.printStackTrace();
-					return null;
-				}
-			}
-		});
+					}
+				});
 
 		femaleAnimal
 				.setCellValueFactory(new Callback<CellDataFeatures<AnimalsMating, String>, ObservableValue<String>>() {
@@ -208,14 +237,31 @@ public class ViewAnimalsMatingController implements Initializable {
 		data = getInitialTableData();
 		animalsMatingTable.setItems(data);
 
+		// Adding pagination
+		Pagination pagination = new Pagination(
+				(data.size() / ANIMALS_MATING_PER_PAGE + 1), 0);
+		pagination.setPageFactory(this::createPage);
+		filterBox.getChildren().remove(animalsMatingTable);
+		filterBox.getChildren().add(new BorderPane(pagination));
+
 	}
+	
+	private Node createPage(int pageIndex) {
+
+        int fromIndex = pageIndex * ANIMALS_MATING_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ANIMALS_MATING_PER_PAGE, data.size());
+        animalsMatingTable.setItems(FXCollections.observableArrayList(data.subList(fromIndex, toIndex)));
+
+        return new BorderPane(animalsMatingTable);
+    }
 
 	public static ObservableList<AnimalsMating> getInitialTableData() {
 
 		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
-		List<AnimalsMating> resultList = session.createCriteria(
-				AnimalsMating.class).addOrder(Order.desc("id")).setMaxResults(1000).list();
+		List<AnimalsMating> resultList = session
+				.createCriteria(AnimalsMating.class).addOrder(Order.desc("id"))
+				.setMaxResults(1000).list();
 
 		ObservableList<AnimalsMating> animalsListData = FXCollections
 				.observableList(resultList);
